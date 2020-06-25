@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import CategoriaService from "src/service/categoria.service";
 import { HttpStatus } from "@enums/http.eum";
+import CategoriaService from "@services/categoria.service";
 
 class CategoriaController {
 
