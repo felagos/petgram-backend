@@ -7,6 +7,7 @@ import { MongoDB } from '@mongo/connection';
 import PingRoutes from '@routes/ping.routes';
 import AuthRoutes from '@routes/auth.routes';
 import CategoriaRoutes from '@routes/categoria.routes';
+import MascotaRoutes from '@routes/mascota.routes';
 
 class App {
 
@@ -29,7 +30,8 @@ class App {
     private initRoutes() {
         this._app.use("/ping", PingRoutes.router);
         this._app.use("/auth", AuthRoutes.router);
-        this._app.use("/categorias", CategoriaRoutes.router)
+        this._app.use("/categorias", CategoriaRoutes.router);
+        this._app.use("/mascotas", MascotaRoutes.router);
     }
 
     private initMongo() {
