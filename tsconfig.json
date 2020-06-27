@@ -74,7 +74,8 @@
       "@controllers/*": ["src/controllers/*"],
       "@services/*": ["src/services/*"],
       "@models/*": ["src/models/*"],
-      "@enums/*": ["src/enums/*"]
+      "@enums/*": ["src/enums/*"],
+      "@helpers/*": ["src/helpers/*"]
     }
   },
   "exclude": ["node_modules"],
