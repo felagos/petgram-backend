@@ -4,6 +4,7 @@ import { HttpStatus } from '@enums/http.enum';
 import { Payload } from '@models/payload.model';
 import { environment } from '@env';
 import { JwtHelper } from '@helpers/jwt.helper';
+import { UsuarioModel } from '@models/usuario.model';
 
 class UsuarioController {
 
@@ -32,8 +33,8 @@ class UsuarioController {
     }
 
     public async registerUser(req: Request, res: Response) {
-        const { email, password } = req.body;
-        const user = await UsuarioService.registerUser(email, password);
+        const dataUser: UsuarioModel = req.body as UsuarioModel;
+        const user = await UsuarioService.registerUser(dataUser);
 
         if (user) {
             const payload: Payload = {

@@ -8,7 +8,8 @@ const validateEmiailExistsSchema = Joi.object().keys({
 
 const validateLoginRegisterSchema = Joi.object().keys({
     email: Joi.string().email().required(),
-    password: Joi.string().required()
+    password: Joi.string().required(),
+    nombre: Joi.string().required()
 });
 
 export class UsuarioMiddleware {

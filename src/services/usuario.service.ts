@@ -11,8 +11,9 @@ class UsuarioService {
         return false;
     }
 
-    public async registerUser(email: string, password: string): Promise<UsuarioModel | null> {
-        const user = new Usuario({ email, password, fechaRegistro: Date.now() });
+    public async registerUser(usuario: UsuarioModel): Promise<UsuarioModel | null> {
+        const passwordHash = await BcryptHelper.encrypt(usuario.password);
+        const user = new Usuario({ email: usuario.email, password: passwordHash, nombre: usuario.nombre, fechaRegistro: Date.now() });
         return await user.save();
     }
 
