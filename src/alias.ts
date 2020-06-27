@@ -11,5 +11,6 @@ moduleAlias.addAlias("@services", __dirname + "/services");
 moduleAlias.addAlias("@models", __dirname + "/models");
 moduleAlias.addAlias("@enums", __dirname + "/enums");
 moduleAlias.addAlias("@helpers", __dirname + "/helpers");
+moduleAlias.addAlias("@middlwares", __dirname + "/middlwares");
 
 moduleAlias('./package.json');
