@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { HttpStatus } from "@enums/http.eum";
+import { HttpStatus } from "@enums/http.enum";
 import MascotaService from "@services/mascota.service";
 
 class MascotaController {

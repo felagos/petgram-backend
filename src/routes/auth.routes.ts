@@ -1,4 +1,6 @@
 import express, { Router } from "express";
+import { UsuarioMiddleware } from "@middlewares/usuario.middlware";
+import UsuarioController from "@controllers/usuario.controller";
 
 class AuthRoutes {
 
@@ -9,6 +11,7 @@ class AuthRoutes {
     }
 
     private initRoutes() {
+        this._router.post("/existsEmail", UsuarioMiddleware.validateEmiailExists, UsuarioController.existsEmail);
     }
 
     public get router(): Router {
