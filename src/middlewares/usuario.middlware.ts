@@ -1,19 +1,24 @@
-import Joi from 'joi';
+import Joi, { ObjectSchema } from 'joi';
 import { Request, Response, NextFunction } from 'express';
+import { handleValidation } from './validator';
 
 const validateEmiailExistsSchema = Joi.object().keys({
     email: Joi.string().email().required()
 });
 
+const validateLoginRegisterSchema = Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().required()
+});
+
 export class UsuarioMiddleware {
 
     static validateEmiailExists(req: Request, res: Response, next: NextFunction) {
-        const { error } = Joi.validate(req.body, validateEmiailExistsSchema);
+        return handleValidation(req.body, validateEmiailExistsSchema, res, next);
+    }
 
-        if (error)
-            return res.status(401).send("Datos inválidos");
-
-        next();
+    static validateLoginRegister(req: Request, res: Response, next: NextFunction) {
+        return handleValidation(req.body, validateLoginRegisterSchema, res, next);
     }
 
 }

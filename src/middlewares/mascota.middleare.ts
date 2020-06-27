@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
+import { handleValidation } from './validator';
 
 const getMascotaByCategoriIdSchema = Joi.object().keys({
     categoriaId: Joi.string().required()
@@ -8,12 +9,7 @@ const getMascotaByCategoriIdSchema = Joi.object().keys({
 export class MascotaMiddleware {
 
     static validateGetCategoriaById(req: Request, res: Response, next: NextFunction) {
-        const { error } = Joi.validate(req.params, getMascotaByCategoriIdSchema);
-
-        if (error)
-            return res.status(401).send("Datos inválidos");
-
-        next();
+        return handleValidation(req.params, getMascotaByCategoriIdSchema, res, next);
     }
 
 }
