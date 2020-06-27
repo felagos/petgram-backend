@@ -1,6 +1,6 @@
 import Joi, { ObjectSchema } from 'joi';
 import { Request, Response, NextFunction } from 'express';
-import { handleValidation } from './validator';
+import { handleValidation } from '@middlewares/validator';
 
 const validateEmiailExistsSchema = Joi.object().keys({
     email: Joi.string().email().required()

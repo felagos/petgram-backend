@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
-import { handleValidation } from './validator';
+import { handleValidation } from '@middlewares/validator';
 
 const getMascotaByCategoriIdSchema = Joi.object().keys({
     categoriaId: Joi.string().required()

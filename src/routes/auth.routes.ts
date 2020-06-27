@@ -12,12 +12,13 @@ class AuthRoutes {
 
     private initRoutes() {
         this._router.post("/existsEmail", UsuarioMiddleware.validateEmiailExists, UsuarioController.existsEmail);
+        this._router.post("/doLogin", UsuarioController.doLogin);
+        this._router.post("/register", UsuarioController.registerUser);
     }
 
     public get router(): Router {
         return this._router;
     }
-
 
 }
 

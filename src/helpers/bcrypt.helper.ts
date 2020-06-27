@@ -1,9 +1,12 @@
 import bcypt from "bcrypt";
 
-export const encrypt = (data: string, salt = 10) => {
-    return bcypt.hash(data, salt);
-}
+export class BcryptHelper {
 
-export const compare = (data: string, hashed: string) => {
-    return bcypt.compare(data, hashed);
+    public static encrypt(data: string, salt = 10): Promise<string> {
+        return bcypt.hash(data, salt);
+    }
+
+    public static compare(data: string, hashed: string): Promise<boolean> {
+        return bcypt.compare(data, hashed);
+    }
 }

@@ -8,7 +8,8 @@ const UsuarioSchema = new Schema({
     },
     password: Schema.Types.String,
     nombre: Schema.Types.String,
-    apellido: Schema.Types.String
+    apellido: Schema.Types.String,
+    fechaRegistro: Schema.Types.Date
 });
 
 export const Usuario = mongoose.model<UsuarioModel>("usuarios", UsuarioSchema);

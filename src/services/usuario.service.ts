@@ -1,4 +1,6 @@
 import { Usuario } from "@mongo/schemas/usuario.schema";
+import { UsuarioModel } from "@models/usuario.model";
+import { BcryptHelper } from "@helpers/bcrypt.helper";
 
 class UsuarioService {
 
@@ -7,6 +9,26 @@ class UsuarioService {
         if (usuario)
             return true;
         return false;
+    }
+
+    public async registerUser(email: string, password: string): Promise<UsuarioModel | null> {
+        const user = new Usuario({ email, password, fechaRegistro: Date.now() });
+        return await user.save();
+    }
+
+    public async getUser(email: string, password: string): Promise<UsuarioModel | null> {
+        const user = await Usuario.findOne({ email }).exec();
+
+        if (user === null)
+            return null;
+
+        const samePassword = await BcryptHelper.compare(password, user.password);
+
+        if (samePassword) {
+            return user;
+        }
+
+        return null;
     }
 
 }
