@@ -37,7 +37,6 @@ class App {
     private initMongo() {
         MongoDB.connect();
     }
-
     public get app(): Application {
         return this._app;
     }
