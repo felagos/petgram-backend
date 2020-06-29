@@ -26,7 +26,7 @@ class UsuarioController {
                 exp: Number(environment.EXP)
             }
             const token = JwtHelper.encode(payload);
-            return res.status(HttpStatus.OK).json({ token });
+            return res.status(HttpStatus.OK).json({ data: token });
         }
 
         return res.status(HttpStatus.NOT_FOUND).json({ message: "Usuario no encontrado" });
