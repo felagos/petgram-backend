@@ -5,6 +5,7 @@ import { Payload } from '@models/payload.model';
 import { environment } from '@env';
 import { JwtHelper } from '@helpers/jwt.helper';
 import { UsuarioModel } from '@models/usuario.model';
+import { ResponseData } from '@models/response.model';
 
 class UsuarioController {
 
@@ -26,7 +27,7 @@ class UsuarioController {
                 exp: Number(environment.EXP)
             }
             const token = JwtHelper.encode(payload);
-            return res.status(HttpStatus.OK).json({ data: token });
+            return res.status(HttpStatus.OK).json(new ResponseData(token));
         }
 
         return res.status(HttpStatus.NOT_FOUND).json({ message: "Usuario no encontrado" });
@@ -42,7 +43,7 @@ class UsuarioController {
                 exp: Number(environment.EXP)
             }
             const token = JwtHelper.encode(payload);
-            return res.status(HttpStatus.CREATE).json({ data: token });
+            return res.status(HttpStatus.CREATE).json(new ResponseData(token));
         }
 
         return res.status(HttpStatus.NOT_FOUND).json({ message: "Error al registrar el usuario" });
