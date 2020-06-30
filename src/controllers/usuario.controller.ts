@@ -42,7 +42,7 @@ class UsuarioController {
                 exp: Number(environment.EXP)
             }
             const token = JwtHelper.encode(payload);
-            return res.status(HttpStatus.CREATE).json({ token });
+            return res.status(HttpStatus.CREATE).json({ data: token });
         }
 
         return res.status(HttpStatus.NOT_FOUND).json({ message: "Error al registrar el usuario" });
