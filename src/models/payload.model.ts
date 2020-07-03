@@ -1,4 +1,6 @@
+import { UsuarioModel } from "./usuario.model";
+
 export interface Payload {
-    email: string,
+    user: UsuarioModel,
     exp: number
 }

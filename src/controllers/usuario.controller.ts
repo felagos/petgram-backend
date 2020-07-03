@@ -23,7 +23,7 @@ class UsuarioController {
 
         if (user) {
             const payload: Payload = {
-                email: user.email,
+                user,
                 exp: Number(environment.EXP)
             }
             const token = JwtHelper.encode(payload);
@@ -45,7 +45,7 @@ class UsuarioController {
 
         if (user) {
             const payload: Payload = {
-                email: user.email,
+                user,
                 exp: Number(environment.EXP)
             }
             const token = JwtHelper.encode(payload);
