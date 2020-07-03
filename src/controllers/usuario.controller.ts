@@ -27,7 +27,13 @@ class UsuarioController {
                 exp: Number(environment.EXP)
             }
             const token = JwtHelper.encode(payload);
-            return res.status(HttpStatus.OK).json(new ResponseData(token));
+            const refreshToken = JwtHelper.encodeRefresh(payload);
+
+            const response = {
+                token, refreshToken
+            };
+
+            return res.status(HttpStatus.OK).json(new ResponseData(response));
         }
 
         return res.status(HttpStatus.NOT_FOUND).json({ message: "Usuario no encontrado" });
@@ -43,6 +49,12 @@ class UsuarioController {
                 exp: Number(environment.EXP)
             }
             const token = JwtHelper.encode(payload);
+            const refreshToken = JwtHelper.encodeRefresh(payload);
+
+            const response = {
+                token, refreshToken
+            }
+
             return res.status(HttpStatus.CREATE).json(new ResponseData(token));
         }
 

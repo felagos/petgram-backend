@@ -8,6 +8,10 @@ export class JwtHelper {
         return jwt.encode(payload, environment.JWT_SECRET, "HS256");
     }
 
+    public static encodeRefresh(payload: Payload) {
+        return jwt.encode(payload, environment.JWT_SECRET_REFRESH, "HS256");
+    }
+
     public static decode(token: string): Payload {
         return jwt.decode(token, environment.JWT_SECRET, false, "HS256") as Payload;
     }
