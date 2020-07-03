@@ -4,7 +4,7 @@ import { BcryptHelper } from "@helpers/bcrypt.helper";
 
 class UsuarioService {
 
-    private projectUser = { _id: 0, email: 1, nombre: 1, __v: 0, password: 0, fechaRegistro: 0 };
+    private projectUser = {  email: 1, nombre: 1, foto: 1, password: 1, _id: 0 };
 
     public async existsEmail(email: string): Promise<boolean> {
         const usuario = await Usuario.findOne({ email }).exec();
@@ -34,7 +34,12 @@ class UsuarioService {
 
         const samePassword = await BcryptHelper.compare(password, user.password);
 
+
         if (samePassword) {
+            delete user._id;
+            delete user.__v;
+            delete user.password;
+            delete user.fechaRegistro;
             return user;
         }
 
