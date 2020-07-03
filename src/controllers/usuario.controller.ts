@@ -55,7 +55,7 @@ class UsuarioController {
                 token, refreshToken
             }
 
-            return res.status(HttpStatus.CREATE).json(new ResponseData(token));
+            return res.status(HttpStatus.CREATE).json(new ResponseData(response));
         }
 
         return res.status(HttpStatus.NOT_FOUND).json({ message: "Error al registrar el usuario" });
