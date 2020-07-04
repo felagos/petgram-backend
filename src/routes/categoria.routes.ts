@@ -1,20 +1,21 @@
 import express, { Router } from 'express';
-import CategoriaController from '@controllers/categoria.controller';
+import { CategoriaController } from '@controllers/categoria.controller';
+import { inject, injectable } from 'inversify';
 
-class CategoriaRouter {
+@injectable()
+export class CategoriaRouter {
+    
     private _router: Router = express.Router();
 
-    constructor() {
+    constructor(@inject(CategoriaController) private controller: CategoriaController) {
         this.initRoutes();
     }
 
     private initRoutes() {
-        this._router.get("/", CategoriaController.getAll);
+        this._router.get("/", this.controller.getAll);
     }
 
     public get router() {
         return this._router;
     }
 }
-
-export default new CategoriaRouter();

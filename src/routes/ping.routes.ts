@@ -1,16 +1,19 @@
 import express, { Router } from 'express';
-import PingController from '@controllers/ping.controller';
+import { PingController } from '@controllers/ping.controller';
+import { inject, injectable } from 'inversify';
 
-class PingRoutes {
+@injectable()
+export class PingRoutes {
+
     private _router: Router;
 
-    constructor() {
+    constructor(@inject(PingController) private controller: PingController) {
         this._router = express.Router();
         this.initRoutes();
     }
 
     private initRoutes() {
-        this._router.get("/", PingController.doPing);
+        this._router.get("/", this.controller.doPing);
     }
 
     public get router(): Router {
@@ -18,6 +21,3 @@ class PingRoutes {
     }
 
 }
-
-
-export default new PingRoutes;

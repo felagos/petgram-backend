@@ -1,8 +1,10 @@
 import { Usuario } from "@mongo/schemas/usuario.schema";
 import { UsuarioModel } from "@models/usuario.model";
 import { BcryptHelper } from "@helpers/bcrypt.helper";
+import { injectable } from "inversify";
 
-class UsuarioService {
+@injectable()
+export class UsuarioService {
 
     private projectUser = {  email: 1, nombre: 1, foto: 1, password: 1, _id: 0 };
 
@@ -47,5 +49,3 @@ class UsuarioService {
     }
 
 }
-
-export default new UsuarioService();

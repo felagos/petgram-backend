@@ -1,19 +1,21 @@
 import express, { Router } from "express";
 import { UsuarioMiddleware } from "@middlewares/usuario.middlware";
-import UsuarioController from "@controllers/usuario.controller";
+import { inject, injectable } from "inversify";
+import { UsuarioController } from "@controllers/usuario.controller";
 
-class AuthRoutes {
+@injectable()
+export class AuthRoutes {
 
     private _router: Router = express.Router();
 
-    constructor() {
+    constructor(@inject(UsuarioController) private controller: UsuarioController) {
         this.initRoutes();
     }
 
     private initRoutes() {
-        this._router.post("/existsEmail", UsuarioMiddleware.validateEmiailExists, UsuarioController.existsEmail);
-        this._router.post("/doLogin", UsuarioController.doLogin);
-        this._router.post("/register", UsuarioController.registerUser);
+        this._router.post("/existsEmail", UsuarioMiddleware.validateEmiailExists, this.controller.existsEmail);
+        this._router.post("/doLogin", this.controller.doLogin);
+        this._router.post("/register", this.controller.registerUser);
     }
 
     public get router(): Router {
@@ -21,5 +23,3 @@ class AuthRoutes {
     }
 
 }
-
-export default new AuthRoutes();

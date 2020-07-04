@@ -1,21 +1,22 @@
 import express, { Router } from 'express';
-import MascotaController from '@controllers/mascota.controller';
 import { MascotaMiddleware } from '@middlewares/mascota.middleare';
+import { inject, injectable } from 'inversify';
+import { MascotaController } from '@controllers/mascota.controller';
 
-class MascotaRouter {
+@injectable()
+export class MascotaRouter {
+    
     private _router: Router = express.Router();
 
-    constructor() {
+    constructor(@inject(MascotaController) private controller: MascotaController) {
         this.initRoutes();
     }
 
     private initRoutes() {
-        this._router.get("/getByCategoriId", MascotaMiddleware.validateGetCategoriaById, MascotaController.getMascotaByCategoriId);
+        this._router.get("/getByCategoriId", MascotaMiddleware.validateGetCategoriaById, this.controller.getMascotaByCategoriId);
     }
 
     public get router() {
         return this._router;
     }
 }
-
-export default new MascotaRouter();

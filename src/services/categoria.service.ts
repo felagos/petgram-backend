@@ -2,8 +2,10 @@ import { Categoria } from "@mongo/schemas/categoria.schema";
 import { CategoriaModel } from "@models/categoria.model";
 import Cache from '@helpers/node.cache';
 import { CacheEnum } from "@enums/cache.enum";
+import { injectable } from "inversify";
 
-class CategoriaService {
+@injectable()
+export class CategoriaService {
 
   public async getAll(): Promise<CategoriaModel[]>  {
     const isPresent = Cache.isPresent(CacheEnum.CATEGORIAS);
@@ -18,5 +20,3 @@ class CategoriaService {
   }
 
 }
-
-export default new CategoriaService();

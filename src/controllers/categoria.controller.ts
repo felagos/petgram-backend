@@ -1,15 +1,17 @@
 import { Request, Response } from "express";
 import { HttpStatus } from "@enums/http.enum";
-import CategoriaService from "@services/categoria.service";
 import { ResponseData } from "@models/response.model";
+import { inject, injectable } from "inversify";
+import { CategoriaService } from "@services/categoria.service";
 
-class CategoriaController {
+@injectable()
+export class CategoriaController {
 
-  public async getAll(req: Request, res: Response): Promise<Response> {
-    const response = await CategoriaService.getAll();
+  constructor(@inject(CategoriaService) private service: CategoriaService){}
+
+  public getAll = async (req: Request, res: Response): Promise<Response> => {
+    const response = await this.service.getAll();
     return res.status(HttpStatus.OK).json(new ResponseData(response));
   }
 
 }
-
-export default new CategoriaController();
