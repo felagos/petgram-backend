@@ -82,10 +82,10 @@ export class UsuarioController {
     }
 
     public logOut = async (req: Request, res: Response) => {
-        const { email } = req.body;
-        await this.tokenService.removeToken(email);
+        const { refreshToken } = req.body;
+        await this.tokenService.removeToken(refreshToken);
 
-        return res.sendStatus(HttpStatus.OK)
+        return res.sendStatus(HttpStatus.OK);
     }
 
 }

@@ -18,8 +18,8 @@ export class TokenService {
         await Token.updateOne({ email }, { refreshToken }, { upsert: true }).exec();
     }
 
-    public async removeToken(email: string): Promise<void> {
-        await Token.deleteOne({ email }).exec();
+    public async removeToken(refreshToken: string): Promise<void> {
+        await Token.deleteOne({ refreshToken }).exec();
     }
 
 }

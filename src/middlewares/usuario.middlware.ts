@@ -1,4 +1,4 @@
-import Joi, { ObjectSchema } from 'joi';
+import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
 import { handleValidation } from '@middlewares/validator';
 import { JwtHelper } from '@helpers/jwt.helper';
@@ -16,6 +16,10 @@ const validateLoginRegisterSchema = Joi.object().keys({
     nombre: Joi.string().required()
 });
 
+const validateHasTokenSchema = Joi.object().keys({
+    refreshToken: Joi.string().email().required()
+});
+
 @injectable()
 export class UsuarioMiddleware {
 
@@ -31,7 +35,7 @@ export class UsuarioMiddleware {
     }
 
     public validateToken = async (req: Request, res: Response, next: NextFunction) => {
-        const refreshStoken = req.headers.authorization ? req.headers.authorization : null;
+        const refreshStoken = req.headers.authorization || null;
 
         if (refreshStoken === null)
             return res.sendStatus(HttpStatus.UNAUTHORIZED);
@@ -47,6 +51,10 @@ export class UsuarioMiddleware {
             return res.sendStatus(HttpStatus.UNAUTHORIZED);
 
         return next();
+    }
+
+    public validateHasToken = (req: Request, res: Response, next: NextFunction) => {
+        return handleValidation(req.body, validateHasTokenSchema, res, next);
     }
 
 }
