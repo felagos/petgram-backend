@@ -5,15 +5,16 @@ import { MascotaController } from '@controllers/mascota.controller';
 
 @injectable()
 export class MascotaRouter {
-    
+
     private _router: Router = express.Router();
 
-    constructor(@inject(MascotaController) private controller: MascotaController) {
+    constructor(@inject(MascotaController) private controller: MascotaController,
+        @inject(MascotaMiddleware) private middleware: MascotaMiddleware) {
         this.initRoutes();
     }
 
     private initRoutes() {
-        this._router.get("/getByCategoriId", MascotaMiddleware.validateGetCategoriaById, this.controller.getMascotaByCategoriId);
+        this._router.get("/getByCategoriId", this.middleware.validateGetCategoriaById, this.controller.getMascotaByCategoriId);
     }
 
     public get router() {

@@ -3,5 +3,7 @@ export enum HttpStatus {
     CREATE = 201,
     ERROR = 500,
     NOT_FOUND = 404,
-    BAD_REQUEST = 400
+    BAD_REQUEST = 400,
+    FORBIDDEN = 403,
+    UNAUTHORIZED = 401
 }
