@@ -35,23 +35,25 @@ export class UsuarioMiddleware {
     }
 
     public validateRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
-        const refreshStoken = req.headers.authorization || null;
+        try {
+            const refreshStoken = req.headers.authorization || null;
 
-        if (refreshStoken === null)
+            if (refreshStoken === null)
+                return res.sendStatus(HttpStatus.UNAUTHORIZED);
+
+            const payload = this.jwtHelper.decodeRefresh(refreshStoken);
+            const { user } = payload;
+
+            const hasToken = await this.tokenService.hasToken(user.email);
+            if (!hasToken)
+                return res.sendStatus(HttpStatus.UNAUTHORIZED);
+
+            req.body = user;
+            
+            return next();
+        } catch (e) {
             return res.sendStatus(HttpStatus.UNAUTHORIZED);
-
-        if (!this.jwtHelper.isValid(refreshStoken, true))
-            return res.sendStatus(HttpStatus.FORBIDDEN);
-
-        const payload = this.jwtHelper.decodeRefresh(refreshStoken);
-        const { user } = payload;
-
-        const hasToken = await this.tokenService.hasToken(user.email);
-        if (!hasToken)
-            return res.sendStatus(HttpStatus.UNAUTHORIZED);
-
-        req.body = user;
-        return next();
+        }
     }
 
 
