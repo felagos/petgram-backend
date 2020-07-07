@@ -50,6 +50,7 @@ export class UsuarioMiddleware {
         if (!hasToken)
             return res.sendStatus(HttpStatus.UNAUTHORIZED);
 
+        req.body = user;
         return next();
     }
 
