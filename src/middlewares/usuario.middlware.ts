@@ -24,7 +24,7 @@ const validateHasTokenSchema = Joi.object().keys({
 export class UsuarioMiddleware {
 
     constructor(@inject(TokenService) private tokenService: TokenService,
-    @inject(JwtHelper) private jwtHelper: JwtHelper) { }
+        @inject(JwtHelper) private jwtHelper: JwtHelper) { }
 
     public validateEmiailExists = (req: Request, res: Response, next: NextFunction) => {
         return handleValidation(req.body, validateEmiailExistsSchema, res, next);
@@ -34,16 +34,16 @@ export class UsuarioMiddleware {
         return handleValidation(req.body, validateLoginRegisterSchema, res, next);
     }
 
-    public validateToken = async (req: Request, res: Response, next: NextFunction) => {
+    public validateRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
         const refreshStoken = req.headers.authorization || null;
 
         if (refreshStoken === null)
             return res.sendStatus(HttpStatus.UNAUTHORIZED);
 
-        if (!this.jwtHelper.isValid(refreshStoken))
+        if (!this.jwtHelper.isValid(refreshStoken, true))
             return res.sendStatus(HttpStatus.FORBIDDEN);
 
-        const payload = this.jwtHelper.decode(refreshStoken);
+        const payload = this.jwtHelper.decodeRefresh(refreshStoken);
         const { user } = payload;
 
         const hasToken = await this.tokenService.hasToken(user.email);
@@ -53,7 +53,23 @@ export class UsuarioMiddleware {
         return next();
     }
 
-    public validateHasToken = (req: Request, res: Response, next: NextFunction) => {
+
+    public validateToken = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const refreshStoken = req.headers.authorization || null;
+
+            if (refreshStoken === null)
+                return res.sendStatus(HttpStatus.UNAUTHORIZED);
+
+            if (!this.jwtHelper.isValid(refreshStoken))
+                return res.sendStatus(HttpStatus.FORBIDDEN);
+
+            return next();
+        } catch (e) {
+            return res.sendStatus(HttpStatus.FORBIDDEN);
+        }
+    }
+    public validateHasRefreshToken = (req: Request, res: Response, next: NextFunction) => {
         return handleValidation(req.body, validateHasTokenSchema, res, next);
     }
 

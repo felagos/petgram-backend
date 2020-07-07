@@ -18,12 +18,17 @@ export class JwtHelper {
         return jwt.verify(token, environment.JWT_SECRET) as Payload;
     }
 
-    public isValid(token: string): boolean {
+    public decodeRefresh(token: string): Payload {
+        return jwt.verify(token, environment.JWT_SECRET_REFRESH, { ignoreExpiration: true }) as Payload;
+    }
+
+    public isValid(token: string, isRefresh: boolean = false): boolean {
         try {
-            this.decode(token);
+            if (!isRefresh) this.decode(token);
+            else this.decodeRefresh(token);
             return true;
-        } catch(e) {
+        } catch (e) {
             return false;
         }
-    } 
+    }
 }

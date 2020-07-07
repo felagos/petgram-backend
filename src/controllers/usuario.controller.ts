@@ -74,9 +74,12 @@ export class UsuarioController {
 
     public generateToken = async (req: Request, res: Response) => {
         const refreshStoken = req.headers.authorization as string;
-
-        const payload: Payload = this.jwtHelper.decode(refreshStoken);
-        const token = this.jwtHelper.encode(payload);
+        
+        const payload: Payload = this.jwtHelper.decodeRefresh(refreshStoken);
+        const newPayload: Payload = {
+            user: payload.user
+        };
+        const token = this.jwtHelper.encode(newPayload);
 
         return res.status(HttpStatus.CREATE).json(new ResponseData(token));
     }

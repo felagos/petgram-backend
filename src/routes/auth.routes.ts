@@ -17,8 +17,8 @@ export class AuthRoutes {
         this._router.post("/existsEmail", this.middleware.validateEmiailExists, this.controller.existsEmail);
         this._router.post("/doLogin", this.controller.doLogin);
         this._router.post("/register", this.controller.registerUser);
-        this._router.get("/token", this.middleware.validateToken, this.controller.generateToken);
-        this._router.post("/logout", this.middleware.validateHasToken, this.controller.logOut);
+        this._router.get("/token", this.middleware.validateRefreshToken, this.controller.generateToken);
+        this._router.post("/logout", this.middleware.validateHasRefreshToken, this.controller.logOut);
     }
 
     public get router(): Router {

@@ -11,6 +11,7 @@ import { TokenService } from '@services/token.service';
 import { UsuarioMiddleware } from '@middlewares/usuario.middlware';
 import { MascotaMiddleware } from '@middlewares/mascota.middleare';
 import { JwtHelper } from '@helpers/jwt.helper';
+import { TokenMiddleware } from '@middlewares/token.middleware';
 
 const container = new Container();
 
@@ -29,6 +30,7 @@ container.bind<UsuarioController>(UsuarioController).to(UsuarioController);
 //middleware
 container.bind<UsuarioMiddleware>(UsuarioMiddleware).to(UsuarioMiddleware);
 container.bind<MascotaMiddleware>(MascotaMiddleware).to(MascotaMiddleware);
+container.bind<TokenMiddleware>(TokenMiddleware).to(TokenMiddleware);
 
 //helpers
 container.bind<JwtHelper>(JwtHelper).to(JwtHelper);
