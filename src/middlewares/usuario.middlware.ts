@@ -49,7 +49,7 @@ export class UsuarioMiddleware {
                 return res.sendStatus(HttpStatus.UNAUTHORIZED);
 
             req.body = user;
-            
+
             return next();
         } catch (e) {
             return res.sendStatus(HttpStatus.UNAUTHORIZED);
@@ -59,17 +59,15 @@ export class UsuarioMiddleware {
 
     public validateToken = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const refreshStoken = req.headers.authorization || null;
-
-            if (refreshStoken === null)
+            const token = req.headers.authorization || "";
+            
+            const payload = this.jwtHelper.decode(token);
+            if (!payload)
                 return res.sendStatus(HttpStatus.UNAUTHORIZED);
-
-            if (!this.jwtHelper.isValid(refreshStoken))
-                return res.sendStatus(HttpStatus.FORBIDDEN);
 
             return next();
         } catch (e) {
-            return res.sendStatus(HttpStatus.FORBIDDEN);
+            return res.sendStatus(HttpStatus.UNAUTHORIZED);
         }
     }
     public validateHasRefreshToken = (req: Request, res: Response, next: NextFunction) => {
