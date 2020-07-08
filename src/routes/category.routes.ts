@@ -14,7 +14,7 @@ export class CategoryRouter {
     }
 
     private initRoutes() {
-        this._router.get("/", this.tokenMiddleware.validateToken, this.controller.getAll);
+        this._router.get("/", this.controller.getAll);
     }
 
     public get router() {
