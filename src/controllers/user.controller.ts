@@ -2,16 +2,16 @@ import { Request, Response } from 'express';
 import { HttpStatus } from '@enums/http.enum';
 import { Payload } from '@models/payload.model';
 import { JwtHelper } from '@helpers/jwt.helper';
-import { UsuarioModel } from '@models/usuario.model';
+import { UserModel } from '@models/user.model';
 import { ResponseData } from '@models/response.model';
 import { inject, injectable } from 'inversify';
-import { UsuarioService } from '@services/usuario.service';
+import { UserService } from '@services/user.service';
 import { TokenService } from '@services/token.service';
 
 @injectable()
-export class UsuarioController {
+export class UserController {
 
-    constructor(@inject(UsuarioService) private userService: UsuarioService,
+    constructor(@inject(UserService) private userService: UserService,
         @inject(TokenService) private tokenService: TokenService,
         @inject(JwtHelper) private jwtHelper: JwtHelper) { }
 
@@ -50,7 +50,7 @@ export class UsuarioController {
     }
 
     public registerUser = async (req: Request, res: Response) => {
-        const dataUser: UsuarioModel = req.body as UsuarioModel;
+        const dataUser: UserModel = req.body as UserModel;
         const user = await this.userService.registerUser(dataUser);
 
         if (user) {
@@ -80,13 +80,6 @@ export class UsuarioController {
         const token = this.jwtHelper.encode(newPayload);
 
         return res.status(HttpStatus.CREATE).json(new ResponseData(token));
-    }
-
-    public logOut = async (req: Request, res: Response) => {
-        const { refreshToken } = req.body;
-        await this.tokenService.removeToken(refreshToken);
-
-        return res.sendStatus(HttpStatus.OK);
     }
 
 }

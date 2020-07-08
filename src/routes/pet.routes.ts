@@ -1,15 +1,15 @@
 import express, { Router } from 'express';
-import { MascotaMiddleware } from '@middlewares/mascota.middleare';
+import { PetMiddleware } from '@middlewares/pet.middleare';
 import { inject, injectable } from 'inversify';
-import { MascotaController } from '@controllers/mascota.controller';
+import { PetController } from '@controllers/pet.controller';
 
 @injectable()
-export class MascotaRouter {
+export class PetRouter {
 
     private _router: Router = express.Router();
 
-    constructor(@inject(MascotaController) private controller: MascotaController,
-        @inject(MascotaMiddleware) private middleware: MascotaMiddleware) {
+    constructor(@inject(PetController) private controller: PetController,
+        @inject(PetMiddleware) private middleware: PetMiddleware) {
         this.initRoutes();
     }
 

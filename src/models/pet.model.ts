@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface MascotaModel extends Document {
+export interface PetModel extends Document {
     nombre: string;
     foto: string;
     categoriaId: string;

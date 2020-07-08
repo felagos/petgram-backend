@@ -1,5 +1,5 @@
-import { UsuarioModel } from "./usuario.model";
+import { UserModel } from "./user.model";
 
 export interface Payload {
-    user: UsuarioModel
+    user: UserModel
 }

@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
-import { UsuarioModel } from '@models/usuario.model';
+import { UserModel } from '@models/user.model';
 
-const UsuarioSchema = new Schema({
+const UserSchema = new Schema({
     email: {
         type: Schema.Types.String,
         required: true
@@ -11,4 +11,4 @@ const UsuarioSchema = new Schema({
     fechaRegistro: Schema.Types.Date
 });
 
-export const Usuario = mongoose.model<UsuarioModel>("usuarios", UsuarioSchema);
+export const User = mongoose.model<UserModel>("usuarios", UserSchema);

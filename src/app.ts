@@ -9,16 +9,16 @@ import { MongoDB } from '@mongo/connection';
 import { container } from './container';
 import { PingRoutes } from '@routes/ping.routes';
 import { AuthRoutes } from '@routes/auth.routes';
-import { CategoriaRouter } from '@routes/categoria.routes';
-import { MascotaRouter } from '@routes/mascota.routes';
+import { CategoryRouter } from '@routes/category.routes';
+import { PetRouter } from '@routes/pet.routes';
 
 class App {
 
     private _app: Application;
     private pingRoutes = container.resolve<PingRoutes>(PingRoutes);
     private authRoures = container.resolve<AuthRoutes>(AuthRoutes);
-    private categoriasRouter = container.resolve<CategoriaRouter>(CategoriaRouter);
-    private mascotaRouter = container.resolve<MascotaRouter>(MascotaRouter);
+    private categoryRouter = container.resolve<CategoryRouter>(CategoryRouter);
+    private petRouter = container.resolve<PetRouter>(PetRouter);
 
     constructor() {
         this._app = express();
@@ -37,8 +37,8 @@ class App {
     private initRoutes() {
         this._app.use("/ping", this.pingRoutes.router);
         this._app.use("/auth", this.authRoures.router);
-        this._app.use("/categorias", this.categoriasRouter.router);
-        this._app.use("/mascotas", this.mascotaRouter.router);
+        this._app.use("/categorias", this.categoryRouter.router);
+        this._app.use("/mascotas", this.petRouter.router);
     }
 
     private initMongo() {

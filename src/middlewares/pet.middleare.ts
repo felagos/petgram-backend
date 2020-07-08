@@ -8,7 +8,7 @@ const getMascotaByCategoriIdSchema = Joi.object().keys({
 });
 
 @injectable()
-export class MascotaMiddleware {
+export class PetMiddleware {
 
     public validateGetCategoriaById(req: Request, res: Response, next: NextFunction) {
         return handleValidation(req.params, getMascotaByCategoriIdSchema, res, next);

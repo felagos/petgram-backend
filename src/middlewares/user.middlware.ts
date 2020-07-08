@@ -16,12 +16,8 @@ const validateLoginRegisterSchema = Joi.object().keys({
     nombre: Joi.string().required()
 });
 
-const validateHasTokenSchema = Joi.object().keys({
-    refreshToken: Joi.string().email().required()
-});
-
 @injectable()
-export class UsuarioMiddleware {
+export class UserMiddleware {
 
     constructor(@inject(TokenService) private tokenService: TokenService,
         @inject(JwtHelper) private jwtHelper: JwtHelper) { }
@@ -41,7 +37,7 @@ export class UsuarioMiddleware {
             if (refreshStoken === null)
                 return res.sendStatus(HttpStatus.UNAUTHORIZED);
 
-            const payload = this.jwtHelper.decodeRefresh(refreshStoken);
+            const payload = this.jwtHelper.decode(refreshStoken, false);
             const { user } = payload;
 
             const hasToken = await this.tokenService.hasToken(user.email);
@@ -52,6 +48,8 @@ export class UsuarioMiddleware {
 
             return next();
         } catch (e) {
+            if (e.name === "JsonWebTokenError")
+                return res.sendStatus(HttpStatus.FORBIDDEN);
             return res.sendStatus(HttpStatus.UNAUTHORIZED);
         }
     }
@@ -60,18 +58,17 @@ export class UsuarioMiddleware {
     public validateToken = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const token = req.headers.authorization || "";
-            
+
             const payload = this.jwtHelper.decode(token);
             if (!payload)
                 return res.sendStatus(HttpStatus.UNAUTHORIZED);
 
             return next();
         } catch (e) {
+            if (e.name === "JsonWebTokenError")
+                return res.sendStatus(HttpStatus.FORBIDDEN);
             return res.sendStatus(HttpStatus.UNAUTHORIZED);
         }
-    }
-    public validateHasRefreshToken = (req: Request, res: Response, next: NextFunction) => {
-        return handleValidation(req.body, validateHasTokenSchema, res, next);
     }
 
 }
