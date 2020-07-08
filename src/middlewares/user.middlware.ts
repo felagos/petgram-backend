@@ -37,14 +37,14 @@ export class UserMiddleware {
             if (refreshStoken === null)
                 return res.sendStatus(HttpStatus.UNAUTHORIZED);
 
-            const payload = this.jwtHelper.decode(refreshStoken, false);
+            const payload = this.jwtHelper.decode(refreshStoken, true);
             const { user } = payload;
 
             const hasToken = await this.tokenService.hasToken(user.email);
             if (!hasToken)
                 return res.sendStatus(HttpStatus.UNAUTHORIZED);
 
-            req.body = user;
+            req.body.user = user;
 
             return next();
         } catch (e) {

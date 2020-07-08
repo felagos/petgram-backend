@@ -34,10 +34,7 @@ export class UserController {
             const token = this.jwtHelper.encode(payload);
             const refreshToken = this.jwtHelper.encodeRefresh(payload);
 
-            const pDeleteToken = this.tokenService.removeToken(email);
-            const pSaveToken = this.tokenService.saveToken(user.email, refreshToken);
-
-            await Promise.all([pDeleteToken, pSaveToken]);
+            await this.tokenService.updateToken(user.email, refreshToken);
 
             const response = {
                 token, refreshToken

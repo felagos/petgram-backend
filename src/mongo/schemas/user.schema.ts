@@ -1,5 +1,4 @@
 import mongoose, { Schema } from 'mongoose';
-import { UserModel } from '@models/user.model';
 
 const UserSchema = new Schema({
     email: {
@@ -11,4 +10,4 @@ const UserSchema = new Schema({
     fechaRegistro: Schema.Types.Date
 });
 
-export const User = mongoose.model<UserModel>("usuarios", UserSchema);
+export const User = mongoose.model("usuarios", UserSchema);

@@ -17,19 +17,18 @@ export class UserService {
 
     public async registerUser(usuario: UserModel): Promise<UserModel | null> {
         const passwordHash = await BcryptHelper.encrypt(usuario.password);
-        const user = new User({ email: usuario.email, password: passwordHash, nombre: usuario.nombre, fechaRegistro: Date.now() });
-        const newUsuer =  await user.save();
-
-        delete user._id;
-        delete user.__v;
-        delete user.password;
-        delete user.fechaRegistro;
+        const user = await new User({ email: usuario.email, password: passwordHash, nombre: usuario.nombre, fechaRegistro: Date.now() }).save();;
+        const newUsuer = (<any> user) as UserModel;
+ 
+        delete newUsuer.password;
+        delete newUsuer.fechaRegistro;
 
         return newUsuer;
     }
 
     public async getUser(email: string, password: string): Promise<UserModel | null> {
-        const user = await User.findOne({ email }, this.projectUser).exec();
+        const userDB = await User.findOne({ email }, this.projectUser, { lean: true }).exec();
+        const user = (<any> userDB) as UserModel; 
 
         if (user === null)
             return null;
@@ -37,10 +36,9 @@ export class UserService {
         const samePassword = await BcryptHelper.compare(password, user.password);
 
         if (samePassword) {
-            delete user._id;
-            delete user.__v;
             delete user.password;
             delete user.fechaRegistro;
+
             return user;
         }
 
