@@ -15,4 +15,9 @@ export class PetController {
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }
 
+    public getAllPets = async (req: Request, res: Response) => {
+        const response = await this.service.getAllPets();
+        return res.status(HttpStatus.OK).json(new ResponseData(response));
+    }
+
 }

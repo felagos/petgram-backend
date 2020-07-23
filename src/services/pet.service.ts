@@ -10,4 +10,8 @@ export class PetService {
         return Pet.find({ categoriaId }).exec();
     }
 
+    public async getAllPets(): Promise<PetModel[]> {
+        return Pet.find({}).exec();
+    }
+
 }
