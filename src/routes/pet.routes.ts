@@ -14,7 +14,7 @@ export class PetRouter {
     }
 
     private initRoutes() {
-        this._router.get("/getByCategoriId", this.middleware.validateGetCategoriaById, this.controller.getMascotaByCategoriId);
+        this._router.get("/getByCategoriId/:categoriaId", this.middleware.validateGetCategoriaById, this.controller.getMascotaByCategoriId);
     }
 
     public get router() {
