@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { environment } from "@env";
-import { Payload } from "@models/payload.model";
+import { Payload } from "@models";
 import { injectable } from 'inversify';
 
 @injectable()

@@ -67,16 +67,16 @@
     "forceConsistentCasingInFileNames": true,  /* Disallow inconsistently-cased references to the same file. */
     "baseUrl": "./",
     "paths": {
-      "@routes/*": ["src/routes/*"],
+      "@routes": ["src/routes"],
       "@env": ["src/environment"],
       "@app": ["src/app"],
-      "@mongo/*": ["src/mongo/*"],
-      "@controllers/*": ["src/controllers/*"],
-      "@services/*": ["src/services/*"],
-      "@models/*": ["src/models/*"],
-      "@enums/*": ["src/enums/*"],
-      "@helpers/*": ["src/helpers/*"],
-      "@middlewares/*": ["src/middlewares/*"]
+      "@controllers": ["src/controllers/"],
+      "@services": ["src/services/"],
+      "@models": ["src/models/"],
+      "@middlewares": ["src/middlewares/"],
+      "@helpers": ["src/helpers/"],
+      "@enums": ["src/enums/"],
+      "@mongo": ["src/mongo/"]
     }
   },
   "exclude": ["node_modules"],

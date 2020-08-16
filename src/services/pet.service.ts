@@ -1,17 +1,18 @@
-import { Pet } from '@mongo/schemas/pet.schema';
-import { PetModel } from '@models/pet.model';
+import { Pet } from '@mongo';
+import { PetModel, PaginationOption, Pagination } from '@models';
 import { injectable } from 'inversify';
-import { Types, mongo } from 'mongoose'
 
 @injectable()
 export class PetService {
 
-    public async getMascotaByCategoriId(categoriaId: string): Promise<PetModel[]> {
-        return Pet.find({ categoriaId }).exec();
+    public async getPeyByCategoryId(categoriaId: string, options: PaginationOption): Promise<Pagination<PetModel>> {
+        const response = await Pet.paginate({ categoriaId }, options);
+        return response as Pagination<PetModel>;
     }
 
-    public async getAllPets(): Promise<PetModel[]> {
-        return Pet.find({}).exec();
+    public async getAllPets(options: PaginationOption): Promise<Pagination<PetModel>> {
+        const response = await Pet.paginate({}, options);
+        return response as Pagination<PetModel>;
     }
 
 }

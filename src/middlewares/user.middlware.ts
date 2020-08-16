@@ -1,10 +1,10 @@
 import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
-import { handleValidation } from '@middlewares/validator';
-import { JwtHelper } from '@helpers/jwt.helper';
-import { HttpStatus } from '@enums/http.enum';
+import { handleValidation } from '@middlewares';
+import { JwtHelper } from '@helpers';
+import { HttpStatus } from '@enums';
 import { inject, injectable } from 'inversify';
-import { TokenService } from '@services/token.service';
+import { TokenService } from '@services';
 
 const validateEmiailExistsSchema = Joi.object().keys({
     email: Joi.string().email().required()

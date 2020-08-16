@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { Token } from "@mongo/schemas/token.schema";
+import { Token } from "@mongo";
 
 @injectable()
 export class TokenService {

@@ -1,12 +1,9 @@
 import { Request, Response } from 'express';
-import { HttpStatus } from '@enums/http.enum';
-import { Payload } from '@models/payload.model';
-import { JwtHelper } from '@helpers/jwt.helper';
-import { UserModel } from '@models/user.model';
-import { ResponseData } from '@models/response.model';
+import { HttpStatus } from '@enums';
+import { Payload, ResponseData, UserModel } from '@models';
+import { JwtHelper } from '@helpers';
 import { inject, injectable } from 'inversify';
-import { UserService } from '@services/user.service';
-import { TokenService } from '@services/token.service';
+import { UserService, TokenService } from '@services';
 
 @injectable()
 export class UserController {

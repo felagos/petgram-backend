@@ -1,7 +1,7 @@
 import express, { Router } from "express";
-import { UserMiddleware } from "@middlewares/user.middlware";
+import { UserMiddleware } from "@middlewares";
 import { inject, injectable } from "inversify";
-import { UserController } from "@controllers/user.controller";
+import { UserController } from "@controllers";
 
 @injectable()
 export class AuthRoutes {

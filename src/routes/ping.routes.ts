@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { PingController } from '@controllers/ping.controller';
+import { PingController } from '@controllers';
 import { inject, injectable } from 'inversify';
 
 @injectable()

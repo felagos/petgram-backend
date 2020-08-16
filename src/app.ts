@@ -5,12 +5,9 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import { MongoDB } from '@mongo/connection';
+import { MongoDB } from '@mongo';
 import { container } from './container';
-import { PingRoutes } from '@routes/ping.routes';
-import { AuthRoutes } from '@routes/auth.routes';
-import { CategoryRouter } from '@routes/category.routes';
-import { PetRouter } from '@routes/pet.routes';
+import { PingRoutes, AuthRoutes, CategoryRouter, PetRouter } from '@routes';
 
 class App {
 

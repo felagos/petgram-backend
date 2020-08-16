@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
-import { PetMiddleware } from '@middlewares/pet.middleare';
+import { PetMiddleware } from '@middlewares';
 import { inject, injectable } from 'inversify';
-import { PetController } from '@controllers/pet.controller';
+import { PetController } from '@controllers';
 
 @injectable()
 export class PetRouter {
@@ -14,8 +14,8 @@ export class PetRouter {
     }
 
     private initRoutes() {
-        this._router.get("/getByCategoriId/:categoriaId", this.middleware.validateGetCategoriaById, this.controller.getMascotaByCategoriId);
-        this._router.get("/getAllPets", this.controller.getAllPets);
+        this._router.get("/getByCategoriId/:categoriaId/:page?", this.middleware.validateGetCategoriaById, this.controller.getMascotaByCategoriId);
+        this._router.get("/getAllPets/:page?", this.controller.getAllPets);
     }
 
     public get router() {

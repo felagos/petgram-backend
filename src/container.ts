@@ -1,16 +1,12 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
-import { CategoryService } from '@services/category.service';
-import { PetService } from '@services/pet.service';
-import { UserService } from '@services/user.service';
-import { CategoryController } from '@controllers/category.controller';
-import { PetController } from '@controllers/pet.controller';
-import { PingController } from '@controllers/ping.controller';
-import { UserController } from '@controllers/user.controller';
-import { TokenService } from '@services/token.service';
-import { UserMiddleware } from '@middlewares/user.middlware';
-import { PetMiddleware } from '@middlewares/pet.middleare';
-import { JwtHelper } from '@helpers/jwt.helper';
+import { CategoryService, PetService, UserService, TokenService } from '@services';
+
+import { CategoryController, PetController, PingController, UserController } from '@controllers';
+
+import { UserMiddleware, PetMiddleware } from '@middlewares';
+
+import { JwtHelper } from '@helpers';
 
 const container = new Container();
 

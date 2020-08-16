@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
-import { CategoryController } from '@controllers/category.controller';
+import { CategoryController } from '@controllers';
 import { inject, injectable } from 'inversify';
-import { UserMiddleware } from '@middlewares/user.middlware';
+import { UserMiddleware } from '@middlewares';
 
 @injectable()
 export class CategoryRouter {

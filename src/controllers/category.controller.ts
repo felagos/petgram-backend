@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { HttpStatus } from "@enums/http.enum";
-import { ResponseData } from "@models/response.model";
+import { HttpStatus } from "@enums";
 import { inject, injectable } from "inversify";
-import { CategoryService } from "@services/category.service";
+import { CategoryService } from "@services";
+import { ResponseData } from "@models";
 
 @injectable()
 export class CategoryController {

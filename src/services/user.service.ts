@@ -1,6 +1,6 @@
-import { User } from "@mongo/schemas/user.schema";
-import { UserModel } from "@models/user.model";
-import { BcryptHelper } from "@helpers/bcrypt.helper";
+import { User } from "@mongo";
+import { UserModel } from "@models";
+import { BcryptHelper } from "@helpers";
 import { injectable } from "inversify";
 
 @injectable()

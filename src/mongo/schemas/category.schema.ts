@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { CategoryModel } from '@models/category.model';
+import { CategoryModel } from '@models';
 
 const CategorySchema = new Schema({
     nombre: Schema.Types.String,

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { PetModel } from '@models/pet.model';
+import mongoosePaginator from 'mongoose-paginate-v2';
 
 const PetSchema = new Schema({
     nombre: Schema.Types.String,
@@ -7,4 +7,6 @@ const PetSchema = new Schema({
     categoriaId: Schema.Types.ObjectId
 });
 
-export const Pet = mongoose.model<PetModel>("mascotas", PetSchema);
+PetSchema.plugin(mongoosePaginator);
+
+export const Pet = mongoose.model("mascotas", PetSchema);

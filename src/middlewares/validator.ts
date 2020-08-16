@@ -1,6 +1,6 @@
 import Joi, { ObjectSchema } from 'joi';
 import { Response, NextFunction } from 'express';
-import { HttpStatus } from '@enums/http.enum';
+import { HttpStatus } from '@enums';
 
 export const handleValidation = (data: any, schema: ObjectSchema, res: Response, next: NextFunction): void | Response<any> => {
     const { error } = Joi.validate(data, schema);
