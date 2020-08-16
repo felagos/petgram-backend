@@ -18,6 +18,7 @@ export class PetRouter {
         this._router.get("/getByCategoriId/:categoriaId/:page?", this.middleware.validateGetCategoriaById, this.controller.getMascotaByCategoriId);
         this._router.get("/getAllPets/:page?", this.controller.getAllPets);
         this._router.put("/favorite", this.authMiddleware.validateToken, this.controller.addFavorite);
+        this._router.delete("/favorite/:petId", this.authMiddleware.validateToken, this.controller.deleteFavorite);
     }
 
     public get router() {

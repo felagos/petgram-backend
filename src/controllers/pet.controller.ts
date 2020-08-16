@@ -34,4 +34,10 @@ export class PetController {
         return res.status(HttpStatus.OK).json(new ResponseData(true));
     }
 
+    public deleteFavorite = async (req: Request, res: Response) => {
+        const { authorization } = req.headers;
+        const { petId } = req.params;
+        return res.status(HttpStatus.OK).json(new ResponseData(true));
+    }
+
 }
