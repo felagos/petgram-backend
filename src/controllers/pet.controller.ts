@@ -24,11 +24,13 @@ export class PetController {
             page: parseInt(page)
         };
         const response = await this.service.getAllPets(options);
-        
+
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }
 
-    public addFavorite = async(req: Request, res: Response) => {
+    public addFavorite = async (req: Request, res: Response) => {
+        const { authorization } = req.headers;
+        const { petId } = req.body;
         return res.status(HttpStatus.OK).json(new ResponseData(true));
     }
 
