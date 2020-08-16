@@ -28,4 +28,8 @@ export class PetController {
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }
 
+    public addFavorite = async(req: Request, res: Response) => {
+        return res.status(HttpStatus.OK).json(new ResponseData(true));
+    }
+
 }

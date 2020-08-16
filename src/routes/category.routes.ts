@@ -1,15 +1,14 @@
 import express, { Router } from 'express';
 import { CategoryController } from '@controllers';
 import { inject, injectable } from 'inversify';
-import { UserMiddleware } from '@middlewares';
+import { AuthMiddleware } from '@middlewares';
 
 @injectable()
 export class CategoryRouter {
     
     private _router: Router = express.Router();
 
-    constructor(@inject(CategoryController) private controller: CategoryController,
-    @inject(UserMiddleware) private tokenMiddleware: UserMiddleware) {
+    constructor(@inject(CategoryController) private controller: CategoryController) {
         this.initRoutes();
     }
 

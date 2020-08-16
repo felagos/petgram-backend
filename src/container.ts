@@ -4,7 +4,7 @@ import { CategoryService, PetService, UserService, TokenService } from '@service
 
 import { CategoryController, PetController, PingController, UserController } from '@controllers';
 
-import { UserMiddleware, PetMiddleware } from '@middlewares';
+import { AuthMiddleware, PetMiddleware } from '@middlewares';
 
 import { JwtHelper } from '@helpers';
 
@@ -23,7 +23,7 @@ container.bind<PingController>(PingController).to(PingController);
 container.bind<UserController>(UserController).to(UserController);
 
 //middleware
-container.bind<UserMiddleware>(UserMiddleware).to(UserMiddleware);
+container.bind<AuthMiddleware>(AuthMiddleware).to(AuthMiddleware);
 container.bind<PetMiddleware>(PetMiddleware).to(PetMiddleware);
 
 //helpers

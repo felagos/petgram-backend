@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { UserMiddleware } from "@middlewares";
+import { AuthMiddleware } from "@middlewares";
 import { inject, injectable } from "inversify";
 import { UserController } from "@controllers";
 
@@ -9,7 +9,7 @@ export class AuthRoutes {
     private _router: Router = express.Router();
 
     constructor(@inject(UserController) private controller: UserController,
-        @inject(UserMiddleware) private middleware: UserMiddleware) {
+        @inject(AuthMiddleware) private middleware: AuthMiddleware) {
         this.initRoutes();
     }
 

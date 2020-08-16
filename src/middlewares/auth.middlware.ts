@@ -17,7 +17,7 @@ const validateLoginRegisterSchema = Joi.object().keys({
 });
 
 @injectable()
-export class UserMiddleware {
+export class AuthMiddleware {
 
     constructor(@inject(TokenService) private tokenService: TokenService,
         @inject(JwtHelper) private jwtHelper: JwtHelper) { }
