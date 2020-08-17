@@ -5,7 +5,7 @@ import { CategoryRepository } from "@repository";
 @injectable()
 export class CategoryService {
 
-  constructor(@inject(CategoryRepository) private repository: CategoryRepository) {}
+  @inject(CategoryRepository) private repository: CategoryRepository;
 
   public getAll(): Promise<CategoryModel[]>  {
     return this.repository.getAll();

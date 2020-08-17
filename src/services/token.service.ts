@@ -4,7 +4,7 @@ import { TokenRepository } from "@repository";
 @injectable()
 export class TokenService {
 
-    constructor(@inject(TokenRepository) private repository: TokenRepository) { }
+    @inject(TokenRepository) private repository: TokenRepository;
 
     public hasToken(email: string): Promise<boolean> {
         return this.repository.hasToken(email);

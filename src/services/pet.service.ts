@@ -6,10 +6,8 @@ import { BaseSerice } from './base.service';
 @injectable()
 export class PetService extends BaseSerice {
 
-    constructor(@inject(PetRepository) private repository: PetRepository,
-        @inject(FavoriteRepository) private favRepository: FavoriteRepository) {
-        super();
-    }
+    @inject(PetRepository) private repository: PetRepository;
+    @inject(FavoriteRepository) private favRepository: FavoriteRepository;
 
     public getPeyByCategoryId(categoriaId: string, page: string = "1"): Promise<Pagination<PetModel>> {
         const options: PaginationOption = {

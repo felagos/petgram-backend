@@ -7,7 +7,7 @@ import { ResponseData } from "@models";
 @injectable()
 export class PetController {
 
-    constructor(@inject(PetService) private service: PetService) { }
+    @inject(PetService) private service: PetService
 
     public getMascotaByCategoriId = async (req: Request, res: Response): Promise<Response> => {
         const { categoriaId, page } = req.params;

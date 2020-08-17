@@ -7,7 +7,7 @@ import { ResponseData } from "@models";
 @injectable()
 export class CategoryController {
 
-  constructor(@inject(CategoryService) private service: CategoryService){}
+  @inject(CategoryService) private service: CategoryService
 
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     const response = await this.service.getAll();

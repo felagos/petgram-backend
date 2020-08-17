@@ -7,9 +7,9 @@ import { TokenService } from "@services";
 @injectable()
 export class UserService {
 
-    constructor(@inject(UserRepository) private repository: UserRepository,
-        @inject(JwtHelper) private jwtHelper: JwtHelper,
-        @inject(TokenService) private tokenService: TokenService) { }
+    @inject(UserRepository) private repository: UserRepository;
+    @inject(JwtHelper) private jwtHelper: JwtHelper;
+    @inject(TokenService) private tokenService: TokenService;
 
     public existsEmail(email: string): Promise<boolean> {
         return this.repository.existsEmail(email);

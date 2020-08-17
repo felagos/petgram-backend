@@ -7,7 +7,7 @@ import { UserService } from '@services';
 @injectable()
 export class UserController {
 
-    constructor(@inject(UserService) private userService: UserService) { }
+    @inject(UserService) private userService: UserService
 
     public existsEmail = async (req: Request, res: Response) => {
         const { email } = req.body;

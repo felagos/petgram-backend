@@ -1,14 +1,13 @@
 import { injectable, inject } from "inversify";
 import { HttpStatus } from "@enums";
 import { ResponseData } from "@models";
-import { Request, Response, response } from "express";
-import { FavoriteService, UserService } from "@services";
-import { JwtHelper } from "@helpers";
+import { Request, Response } from "express";
+import { FavoriteService } from "@services";
 
 @injectable()
 export class FavoriteController {
 
-    constructor(@inject(FavoriteService) private favoriteService: FavoriteService) { }
+    @inject(FavoriteService) private favoriteService: FavoriteService
 
     public addFavorite = async (req: Request, res: Response) => {
         const { authorization = "" } = req.headers;
