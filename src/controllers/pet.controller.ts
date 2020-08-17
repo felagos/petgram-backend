@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { HttpStatus } from "@enums";
 import { inject, injectable } from "inversify";
 import { PetService } from "@services";
-import { ResponseData } from "@models";
+import { BaseController } from "./base.controller";
 
 @injectable()
-export class PetController {
+export class PetController extends BaseController {
 
     @inject(PetService) private service: PetService
 
@@ -13,7 +13,8 @@ export class PetController {
         const { categoriaId, page } = req.params;
 
         const response = await this.service.getPeyByCategoryId(categoriaId, page);
-        return res.status(HttpStatus.OK).json(new ResponseData(response));
+        
+        return this.responseOK(res, response);
     }
 
     public getAllPetsWithFav = async (req: Request, res: Response) => {
@@ -22,7 +23,7 @@ export class PetController {
 
         const response = await this.service.getAllPetsWithFav(page, authorization);
 
-        return res.status(HttpStatus.OK).json(new ResponseData(response));
+        return this.responseOK(res, response);
     }
 
 }

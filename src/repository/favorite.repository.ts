@@ -1,44 +1,54 @@
 import { injectable } from "inversify";
 import { Favorite } from "@mongo";
-import { FavoriteModel, PaginationOption, Pagination } from "@models";
+import { FavoriteModel, PetModel } from "@models";
 
 @injectable()
 export class FavoriteRepository {
 
-    public async addOrCreateFavorite(id: string, petId: string): Promise<FavoriteModel> {
+    public async addOrCreateFavorite(id: string, pet: PetModel): Promise<FavoriteModel> {
         let fav = await Favorite.findOne({ userId: id }).exec();
 
         if (fav === null) {
-            fav = await new Favorite({ userId: id, favorites: [petId] }).save();
+            fav = await this.createFavorite(id, pet);
         }
         else {
-            fav.favorites.push(petId);
-            fav.save();
+            this.updateFavorite(fav, pet);
         }
 
-        return fav as FavoriteModel;
+        return fav;
     }
 
-    public async deleteFavorite(userId: string, petId: string): Promise<FavoriteModel> {
+    private async createFavorite(id: string, pet: PetModel) {
+        return await new Favorite({ userId: id, favorites: [pet] }).save();
+    }
+
+    private updateFavorite(fav: FavoriteModel, pet: PetModel) {
+        fav.favorites.push(pet);
+        fav.save();
+    }
+
+    public async deleteFavorite(userId: string, petId: string): Promise<FavoriteModel | null> {
         const fav = await Favorite.findOne({ userId }).exec();
 
-        const idsFavorites = fav.favorites.filter((id: string) => id !== petId);
+        if (!fav) return null;
+
+        const idsFavorites = fav.favorites.filter((pet: PetModel) => pet._id !== petId);
 
         fav.favorites = idsFavorites;
         fav.save();
 
-        return fav as FavoriteModel;
+        return fav;
     }
 
-    public async getFavorites(userId: string): Promise<FavoriteModel> {
+    public async getFavorites(userId: string): Promise<FavoriteModel | null> {
+        return await Favorite.findOne({ userId }).exec();
+    }
+
+    public async getFavoritesIds(userId: string): Promise<string[]> {
         const response = await Favorite.findOne({ userId });
-        return response as FavoriteModel;
-    }
 
-    public async getFavoritesPage(userId: string, options: PaginationOption): Promise<Pagination<FavoriteModel>> {
-        const response = await Favorite.paginate({ userId }, options);
-        return response as Pagination<FavoriteModel>;
+        if (!response) return [];
+        return response.favorites.map((pet: PetModel) => pet._id);
     }
-
 
 }

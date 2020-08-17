@@ -11,9 +11,9 @@ export class FavoriteController {
 
     public addFavorite = async (req: Request, res: Response) => {
         const { authorization = "" } = req.headers;
-        const { petId } = req.body;
+        const { pet } = req.body;
 
-        const response = await this.favoriteService.addFavorite(authorization, petId);
+        const response = await this.favoriteService.addFavorite(authorization, pet);
 
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }
@@ -22,16 +22,15 @@ export class FavoriteController {
         const { authorization = "" } = req.headers;
         const { petId } = req.params;
 
-        const response = await this.favoriteService.addFavorite(authorization, petId);
+        const response = await this.favoriteService.deleteFavorite(authorization, petId);
 
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }
 
     public getAll = async (req: Request, res: Response) => {
         const { authorization = "" } = req.headers;
-        const { page } = req.params;
 
-        const response = await this.favoriteService.getAllFavorites(parseInt(page), authorization);
+        const response = await this.favoriteService.getAllFavorites(authorization);
 
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }

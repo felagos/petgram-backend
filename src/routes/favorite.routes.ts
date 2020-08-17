@@ -16,7 +16,7 @@ export class FavoriteRouter {
     private initRoutes() {
         this._router.put("/", this.authMiddleware.validateToken, this.controller.addFavorite);
         this._router.delete("/:petId", this.authMiddleware.validateToken, this.controller.deleteFavorite);
-        this._router.get("/:page?", this.controller.getAll);
+        this._router.get("/", this.controller.getAll);
     }
 
     public get router() {
