@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { HttpStatus } from "@enums";
 import { inject, injectable } from "inversify";
 import { PetService } from "@services";
-import { PaginationOption, ResponseData } from "@models";
+import { ResponseData } from "@models";
 
 @injectable()
 export class PetController {
@@ -16,12 +16,13 @@ export class PetController {
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }
 
-    public getAllPets = async (req: Request, res: Response) => {
+    public getAllPetsWithFav = async (req: Request, res: Response) => {
         const { page } = req.params;
-    
-        const response = await this.service.getAllPets(page);
+        const { authorization = "" } = req.headers;
+
+        const response = await this.service.getAllPetsWithFav(page, authorization);
 
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }
-    
+
 }

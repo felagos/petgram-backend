@@ -26,10 +26,20 @@ export class FavoriteService {
         return await this.favRepository.deleteFavorite(user._id, petId);
     }
 
+    public async getFavoritiesIds(token: string) {
+        const payload = this.jwtHelper.decode(token, true);
+        const user = await this.userService.getByEmail(payload.user.email);
+        const favoritiesPet = await this.favRepository.getFavorities(user._id);
+
+        if(favoritiesPet)
+            return favoritiesPet.favorites;
+        return [];
+    }
+
     public async getAllFavorities(token: string) {
         const response: PetModel[] = [];
 
-        const payload = this.jwtHelper.decode(token, true);
+        const payload = this.jwtHelper.decode(token);
         const user = await this.userService.getByEmail(payload.user.email);
         const favoritiesPet = await this.favRepository.getFavorities(user._id);
 
@@ -38,7 +48,6 @@ export class FavoriteService {
                 const pet = await this.petRepository.getPet(favId);
                 response.push(pet);
             }
-            return response;
         }
         return response;
     }
