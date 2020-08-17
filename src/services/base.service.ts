@@ -1,7 +1,7 @@
 import { JwtHelper } from "@helpers";
 import { inject, injectable } from "inversify";
 import { UserRepository } from "@repository";
-import { UserModel, EmptyUser } from "src/models";
+import { UserModel, EmptyUser } from "@models";
 
 @injectable()
 export class BaseSerice {
