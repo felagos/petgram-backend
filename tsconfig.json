@@ -76,7 +76,8 @@
       "@middlewares": ["src/middlewares/"],
       "@helpers": ["src/helpers/"],
       "@enums": ["src/enums/"],
-      "@mongo": ["src/mongo/"]
+      "@mongo": ["src/mongo/"],
+      "@repository": ["src/repository/"]
     }
   },
   "exclude": ["node_modules"],

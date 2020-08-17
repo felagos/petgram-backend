@@ -1,52 +1,81 @@
-import { User } from "@mongo";
-import { UserModel } from "@models";
-import { BcryptHelper } from "@helpers";
-import { injectable } from "inversify";
+import { UserModel, Payload, TokenModel } from "@models";
+import { injectable, inject } from "inversify";
+import { UserRepository } from "@repository";
+import { JwtHelper } from "@helpers";
+import { TokenService } from "@services";
 
 @injectable()
 export class UserService {
 
-    private projectUser = { email: 1, nombre: 1, foto: 1, password: 1, _id: 0 };
+    constructor(@inject(UserRepository) private repository: UserRepository,
+        @inject(JwtHelper) private jwtHelper: JwtHelper,
+        @inject(TokenService) private tokenService: TokenService) { }
 
-    public async existsEmail(email: string): Promise<boolean> {
-        const usuario = await User.findOne({ email }).exec();
-        if (usuario)
-            return true;
-        return false;
+    public existsEmail(email: string): Promise<boolean> {
+        return this.repository.existsEmail(email);
     }
 
-    public async registerUser(usuario: UserModel): Promise<UserModel | null> {
-        const passwordHash = await BcryptHelper.encrypt(usuario.password);
-        const user = await new User({ email: usuario.email, password: passwordHash, nombre: usuario.nombre, fechaRegistro: Date.now() }).save();;
-        const newUsuer = (<any>user) as UserModel;
-
-        delete newUsuer.password;
-        delete newUsuer.fechaRegistro;
-
-        return newUsuer;
+    private registerUser(usuario: UserModel): Promise<UserModel | null> {
+        return this.repository.registerUser(usuario);
     }
 
-    public async getUser(email: string, password: string): Promise<UserModel | null> {
-        const userDB = await User.findOne({ email }, this.projectUser, { lean: true }).exec();
-        const user = (<any>userDB) as UserModel;
+    public getUser(email: string, password: string): Promise<UserModel | null> {
+        return this.repository.getUser(email, password);
+    }
 
-        if (user === null)
-            return null;
+    public getByEmail(email: string): Promise<UserModel> {
+        return this.repository.getByEmail(email);
+    }
 
-        const samePassword = await BcryptHelper.compare(password, user.password);
+    public async doLogin(email: string, password: string): Promise<TokenModel | null> {
+        const user = await this.getUser(email, password);
 
-        if (samePassword) {
-            delete user.password;
-            delete user.fechaRegistro;
+        if (user) {
+            const payload: Payload = {
+                user
+            }
+            const token = this.jwtHelper.encode(payload);
+            const refreshToken = this.jwtHelper.encodeRefresh(payload);
 
-            return user;
+            await this.tokenService.updateToken(user.email, refreshToken);
+
+            const response: TokenModel = {
+                token, refreshToken
+            };
+
+            return response;
         }
 
         return null;
     }
 
-    public async getByEmail(email: string): Promise<UserModel> {
-        return await User.findOne({ email }).exec();
+    public async doRegisterUser(usuario: UserModel): Promise<TokenModel | null> {
+        const user = await this.registerUser(usuario);
+
+        if (user) {
+            const payload: Payload = {
+                user
+            }
+            const token = this.jwtHelper.encode(payload);
+            const refreshToken = this.jwtHelper.encodeRefresh(payload);
+
+            await this.tokenService.saveToken(user.email, refreshToken);
+
+            const response: TokenModel = {
+                token, refreshToken
+            }
+
+            return response;
+        }
+
+        return null;
+    }
+
+    public generateToken(user: UserModel) {
+        const newPayload: Payload = {
+            user
+        };
+        return this.jwtHelper.encode(newPayload);
     }
 
 }

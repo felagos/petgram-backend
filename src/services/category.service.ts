@@ -1,12 +1,14 @@
-import { Category } from "@mongo";
 import { CategoryModel } from "@models";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
+import { CategoryRepository } from "@repository";
 
 @injectable()
 export class CategoryService {
 
-  public async getAll(): Promise<CategoryModel[]>  {
-    return await Category.find({}).exec();
+  constructor(@inject(CategoryRepository) private repository: CategoryRepository) {}
+
+  public getAll(): Promise<CategoryModel[]>  {
+    return this.repository.getAll();
   }
 
 }

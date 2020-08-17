@@ -11,19 +11,15 @@ export class PetController {
 
     public getMascotaByCategoriId = async (req: Request, res: Response): Promise<Response> => {
         const { categoriaId, page } = req.params;
-        const options: PaginationOption = {
-            page: parseInt(page)
-        };
-        const response = await this.service.getPeyByCategoryId(categoriaId, options);
+
+        const response = await this.service.getPeyByCategoryId(categoriaId, page);
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }
 
     public getAllPets = async (req: Request, res: Response) => {
         const { page } = req.params;
-        const options: PaginationOption = {
-            page: parseInt(page)
-        };
-        const response = await this.service.getAllPets(options);
+    
+        const response = await this.service.getAllPets(page);
 
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }

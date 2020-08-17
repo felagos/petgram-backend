@@ -1,18 +1,26 @@
-import { Pet } from '@mongo';
 import { PetModel, PaginationOption, Pagination } from '@models';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
+import { PetRepository } from '@repository';
 
 @injectable()
 export class PetService {
 
-    public async getPeyByCategoryId(categoriaId: string, options: PaginationOption): Promise<Pagination<PetModel>> {
-        const response = await Pet.paginate({ categoriaId }, options);
-        return response as Pagination<PetModel>;
+    constructor(@inject(PetRepository) private repository: PetRepository) { }
+
+    public getPeyByCategoryId(categoriaId: string, page: string = "1"): Promise<Pagination<PetModel>> {
+        const options: PaginationOption = {
+            page: parseInt(page)
+        };
+
+        return this.repository.getPeyByCategoryId(categoriaId, options);
     }
 
-    public async getAllPets(options: PaginationOption): Promise<Pagination<PetModel>> {
-        const response = await Pet.paginate({}, options);
-        return response as Pagination<PetModel>;
+    public getAllPets(page: string = "1"): Promise<Pagination<PetModel>> {
+        const options: PaginationOption = {
+            page: parseInt(page)
+        };
+
+        return this.repository.getAllPets(options);
     }
 
 }
