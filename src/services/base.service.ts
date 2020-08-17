@@ -13,7 +13,7 @@ export class BaseSerice {
         if (token === "")
             return { _id: "" };
 
-        const payload = this.jwtHelper.decode(token);
+        const payload = this.jwtHelper.decode(token, true);
         return await this.userRepository.getByEmail(payload.user.email);
     }
 
