@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { injectable } from "inversify";
+import { BaseController } from "./base.controller";
 
 @injectable()
-export class PingController {
+export class PingController extends BaseController {
 
     public doPing = (req: Request, res: Response): Response => {
-        return res.status(200).json({ data: "Server up !" });
+        return this.responseOK(res, "Server up !");
     }
 
 }

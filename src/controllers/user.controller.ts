@@ -3,9 +3,10 @@ import { HttpStatus } from '@enums';
 import { ResponseData, UserModel } from '@models';
 import { inject, injectable } from 'inversify';
 import { UserService } from '@services';
+import { BaseController } from './base.controller';
 
 @injectable()
-export class UserController {
+export class UserController extends BaseController {
 
     @inject(UserService) private userService: UserService
 
@@ -13,7 +14,7 @@ export class UserController {
         const { email } = req.body;
         const response = await this.userService.existsEmail(email);
 
-        return res.status(HttpStatus.OK).json({ data: response });
+        return this.responseOK(res, response);
     }
 
     public doLogin = async (req: Request, res: Response) => {
@@ -22,9 +23,9 @@ export class UserController {
         const response = await this.userService.doLogin(email, password);
 
         if (response)
-            return res.status(HttpStatus.OK).json(new ResponseData(response));
+            return this.responseOK(res, response);
 
-        return res.status(HttpStatus.NOT_FOUND).json({ message: "Usuario no encontrado" });
+        return this.responseNotFound(res);
     }
 
     public registerUser = async (req: Request, res: Response) => {
@@ -34,14 +35,14 @@ export class UserController {
         if (response)
             return res.status(HttpStatus.CREATE).json(new ResponseData(response));
 
-        return res.status(HttpStatus.NOT_FOUND).json({ message: "Error al registrar el usuario" });
+        return this.responseNotFound(res);
     }
 
     public generateToken = async (req: Request, res: Response) => {
         const { user } = req.body;
-        const respsonse = this.userService.generateToken(user);
+        const response = this.userService.generateToken(user);
 
-        return res.status(HttpStatus.CREATE).json(new ResponseData(respsonse));
+        return this.responseCreate(res, response);
     }
 
 }

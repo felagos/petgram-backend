@@ -10,4 +10,12 @@ export class BaseController {
         return res.status(HttpStatus.OK).json(new ResponseData(data));
     }
 
+    protected responseCreate<T>(res: Response, data: T) {
+        return res.status(HttpStatus.CREATE).json(new ResponseData(data));
+    }
+
+    protected responseNotFound(res: Response) {
+        return res.status(HttpStatus.NOT_FOUND).send();
+    }
+
 }

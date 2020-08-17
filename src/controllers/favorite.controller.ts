@@ -3,9 +3,10 @@ import { HttpStatus } from "@enums";
 import { ResponseData } from "@models";
 import { Request, Response } from "express";
 import { FavoriteService } from "@services";
+import { BaseController } from "./base.controller";
 
 @injectable()
-export class FavoriteController {
+export class FavoriteController extends BaseController {
 
     @inject(FavoriteService) private favoriteService: FavoriteService
 
@@ -15,7 +16,7 @@ export class FavoriteController {
 
         const response = await this.favoriteService.addFavorite(authorization, pet);
 
-        return res.status(HttpStatus.OK).json(new ResponseData(response));
+        return this.responseOK(res, response);
     }
 
     public deleteFavorite = async (req: Request, res: Response) => {
@@ -24,7 +25,7 @@ export class FavoriteController {
 
         const response = await this.favoriteService.deleteFavorite(authorization, petId);
 
-        return res.status(HttpStatus.OK).json(new ResponseData(response));
+        return this.responseOK(res, response);
     }
 
     public getAll = async (req: Request, res: Response) => {
@@ -32,7 +33,7 @@ export class FavoriteController {
 
         const response = await this.favoriteService.getAllFavorites(authorization);
 
-        return res.status(HttpStatus.OK).json(new ResponseData(response));
+        return this.responseOK(res, response);
     }
 
 }
