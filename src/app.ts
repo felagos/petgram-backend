@@ -26,12 +26,12 @@ class App {
     }
 
     private initApp() {
-        this._app.use(bodyParser.json());
-        this._app.use(bodyParser.urlencoded({ extended: false }));
+        this._app.use(bodyParser.json({ limit: '500mb' }));
+        this._app.use(bodyParser.urlencoded({ extended: false, limit: '500mb' }));
         this._app.use(helmet());
         this._app.use(cors());
     }
-    
+
     private initRoutes() {
         this._app.use("/ping", this.pingRoutes.router);
         this._app.use("/auth", this.authRoures.router);
