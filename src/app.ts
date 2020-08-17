@@ -7,7 +7,7 @@ import cors from 'cors';
 
 import { MongoDB } from '@mongo';
 import { container } from './container';
-import { PingRoutes, AuthRoutes, CategoryRouter, PetRouter } from '@routes';
+import { PingRoutes, AuthRoutes, CategoryRouter, PetRouter, FavoriteRouter } from '@routes';
 
 class App {
 
@@ -16,6 +16,7 @@ class App {
     private authRoures = container.resolve<AuthRoutes>(AuthRoutes);
     private categoryRouter = container.resolve<CategoryRouter>(CategoryRouter);
     private petRouter = container.resolve<PetRouter>(PetRouter);
+    private favoriteRouter = container.resolve<FavoriteRouter>(FavoriteRouter);
 
     constructor() {
         this._app = express();
@@ -36,6 +37,7 @@ class App {
         this._app.use("/auth", this.authRoures.router);
         this._app.use("/categorias", this.categoryRouter.router);
         this._app.use("/mascotas", this.petRouter.router);
+        this._app.use("/favorite", this.favoriteRouter.router);
     }
 
     private initMongo() {

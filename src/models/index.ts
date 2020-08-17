@@ -6,3 +6,4 @@ export * from './pet.model';
 export * from './response.model';
 export * from './token.model';
 export * from './user.model';
+export * from './favorite.model';
