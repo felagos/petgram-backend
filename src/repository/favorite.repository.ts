@@ -20,4 +20,8 @@ export class FavoriteRepository {
             }
         }, { upsert: true, new: true });
     }
+
+    public async getFavorities(userId: string): Promise<FavoriteModel | null> {
+        return await Favorite.findOne({ userId }).exec();
+    }
 }

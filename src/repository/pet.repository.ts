@@ -1,4 +1,5 @@
 import { Pet } from '@mongo';
+import { Types } from 'mongoose';
 import { PetModel, PaginationOption, Pagination } from '@models';
 import { injectable } from 'inversify';
 
@@ -13,6 +14,10 @@ export class PetRepository {
     public async getAllPets(options: PaginationOption): Promise<Pagination<PetModel>> {
         const response = await Pet.paginate({}, options);
         return response as Pagination<PetModel>;
+    }
+
+    public async getPet(id: string): Promise<PetModel> {
+        return await Pet.findOne({ _id: new Types.ObjectId(id) }).exec();
     }
 
 }

@@ -1,13 +1,14 @@
 import { injectable, inject } from "inversify";
-import { FavoriteModel } from "@models";
-import { FavoriteRepository } from "@repository";
+import { FavoriteModel, PetModel } from "@models";
+import { FavoriteRepository, PetRepository } from "@repository";
 import { JwtHelper } from "@helpers";
 import { UserService } from "@services";
 
 @injectable()
 export class FavoriteService {
 
-    constructor(@inject(FavoriteRepository) private repository: FavoriteRepository,
+    constructor(@inject(FavoriteRepository) private favRepository: FavoriteRepository,
+    @inject(PetRepository) private petRepository: PetRepository,
         @inject(JwtHelper) private jwtHelper: JwtHelper,
         @inject(UserService) private userService: UserService) { }
 
@@ -15,13 +16,30 @@ export class FavoriteService {
         const payload = this.jwtHelper.decode(token);
         const user = await this.userService.getByEmail(payload.user.email);
 
-        return await this.repository.addFavorite(user._id, petId);
+        return await this.favRepository.addFavorite(user._id, petId);
     }
 
     public async deleteFavorite(token: string, petId: string): Promise<FavoriteModel> {
         const payload = this.jwtHelper.decode(token);
         const user = await this.userService.getByEmail(payload.user.email);
 
-        return await this.repository.deleteFavorite(user._id, petId);
+        return await this.favRepository.deleteFavorite(user._id, petId);
+    }
+
+    public async getAllFavorities(token: string) {
+        const response: PetModel[] = [];
+
+        const payload = this.jwtHelper.decode(token, true);
+        const user = await this.userService.getByEmail(payload.user.email);
+        const favoritiesPet = await this.favRepository.getFavorities(user._id);
+
+        if (favoritiesPet) {
+            for await (const favId of favoritiesPet.favorites) {
+                const pet = await this.petRepository.getPet(favId);
+                response.push(pet);
+            }
+            return response;
+        }
+        return response;
     }
 }
