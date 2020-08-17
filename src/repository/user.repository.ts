@@ -17,7 +17,7 @@ export class UserRepository {
 
     public async registerUser(usuario: UserModel): Promise<UserModel | null> {
         const passwordHash = await BcryptHelper.encrypt(usuario.password);
-        const user = await new User({ email: usuario.email, password: passwordHash, nombre: usuario.nombre, fechaRegistro: Date.now() }).save();;
+        const user = await new User({ email: usuario.email, password: passwordHash, nombre: usuario.nombre, fechaRegistro: Date.now() }).save();
         const newUsuer = (<any>user) as UserModel;
 
         delete newUsuer.password;

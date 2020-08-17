@@ -12,7 +12,7 @@ export class FavoriteService extends BaseSerice {
     public async addFavorite(token: string, petId: string): Promise<FavoriteModel> {
         const user = await this.getUserFromToken(token);
 
-        return await this.favRepository.addFavorite(user._id, petId);
+        return await this.favRepository.addOrCreateFavorite(user._id, petId);
     }
 
     public async deleteFavorite(token: string, petId: string): Promise<FavoriteModel> {
@@ -31,7 +31,7 @@ export class FavoriteService extends BaseSerice {
         return [];
     }
 
-    public async getAllFavorities(token: string) {
+    public async getAllFavorities(page: number = 1, token: string) {
         const response: PetModel[] = [];
 
        const user = await this.getUserFromToken(token);

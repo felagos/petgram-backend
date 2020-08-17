@@ -1,27 +1,44 @@
 import { injectable } from "inversify";
 import { Favorite } from "@mongo";
-import { FavoriteModel } from "@models";
+import { FavoriteModel, PaginationOption, Pagination } from "@models";
 
 @injectable()
 export class FavoriteRepository {
 
-    public async addFavorite(id: string, petId: string): Promise<FavoriteModel> {
-        return await Favorite.findOneAndUpdate({ userId: id }, {
-            $push: {
-                favorites: petId
-            }
-        }, { upsert: true, new: true });
+    public async addOrCreateFavorite(id: string, petId: string): Promise<FavoriteModel> {
+        let fav = await Favorite.findOne({ userId: id }).exec();
+
+        if (fav === null) {
+            fav = await new Favorite({ userId: id, favorites: [petId] }).save();
+        }
+        else {
+            fav.favorites.push(petId);
+            fav.save();
+        }
+
+        return fav as FavoriteModel;
     }
 
-    public async deleteFavorite(id: string, petId: string): Promise<FavoriteModel> {
-        return await Favorite.findOneAndUpdate({ userId: id }, {
-            $pull: {
-                favorites: petId
-            }
-        }, { upsert: true, new: true });
+    public async deleteFavorite(userId: string, petId: string): Promise<FavoriteModel> {
+        const fav = await Favorite.findOne({ userId }).exec();
+
+        const idsFavorites = fav.favorites.filter((id: string) => id !== petId);
+
+        fav.favorites = idsFavorites;
+        fav.save();
+
+        return fav as FavoriteModel;
     }
 
-    public async getFavorities(userId: string): Promise<FavoriteModel | null> {
-        return await Favorite.findOne({ userId }).exec();
+    public async getFavorities(userId: string): Promise<FavoriteModel> {
+        const response = await Favorite.findOne({ userId });
+        return response as FavoriteModel;
     }
+
+    public async getFavoritiesPage(userId: string, options: PaginationOption): Promise<Pagination<FavoriteModel>> {
+        const response = await Favorite.paginate({ userId }, options);
+        return response as Pagination<FavoriteModel>;
+    }
+
+
 }

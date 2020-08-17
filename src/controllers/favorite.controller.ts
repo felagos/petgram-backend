@@ -29,8 +29,9 @@ export class FavoriteController {
 
     public getAll = async (req: Request, res: Response) => {
         const { authorization = "" } = req.headers;
+        const { page } = req.params;
 
-        const response = await this.favoriteService.getAllFavorities(authorization);
+        const response = await this.favoriteService.getAllFavorities(parseInt(page), authorization);
 
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }
