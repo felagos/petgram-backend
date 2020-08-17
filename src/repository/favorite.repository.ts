@@ -30,12 +30,12 @@ export class FavoriteRepository {
         return fav as FavoriteModel;
     }
 
-    public async getFavorities(userId: string): Promise<FavoriteModel> {
+    public async getFavorites(userId: string): Promise<FavoriteModel> {
         const response = await Favorite.findOne({ userId });
         return response as FavoriteModel;
     }
 
-    public async getFavoritiesPage(userId: string, options: PaginationOption): Promise<Pagination<FavoriteModel>> {
+    public async getFavoritesPage(userId: string, options: PaginationOption): Promise<Pagination<FavoriteModel>> {
         const response = await Favorite.paginate({ userId }, options);
         return response as Pagination<FavoriteModel>;
     }

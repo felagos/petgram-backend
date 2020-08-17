@@ -31,7 +31,7 @@ export class FavoriteController {
         const { authorization = "" } = req.headers;
         const { page } = req.params;
 
-        const response = await this.favoriteService.getAllFavorities(parseInt(page), authorization);
+        const response = await this.favoriteService.getAllFavorites(parseInt(page), authorization);
 
         return res.status(HttpStatus.OK).json(new ResponseData(response));
     }

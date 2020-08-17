@@ -26,7 +26,7 @@ export class PetService extends BaseSerice {
 
         const user = await this.getUserFromToken(token);
         if (user) {
-            const favsPets = await this.favRepository.getFavorities(user._id);
+            const favsPets = await this.favRepository.getFavorites(user._id);
             favs = favsPets ? favsPets.favorites : [];
         }
 

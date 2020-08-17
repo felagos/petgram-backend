@@ -21,24 +21,24 @@ export class FavoriteService extends BaseSerice {
         return await this.favRepository.deleteFavorite(user._id, petId);
     }
 
-    public async getFavoritiesIds(token: string) {
+    public async getFavoritesIds(token: string) {
         const user = await this.getUserFromToken(token);
-        const favoritiesPet = await this.favRepository.getFavorities(user._id);
+        const favoritesPet = await this.favRepository.getFavorites(user._id);
 
-        if (favoritiesPet)
-            return favoritiesPet.favorites;
+        if (favoritesPet)
+            return favoritesPet.favorites;
 
         return [];
     }
 
-    public async getAllFavorities(page: number = 1, token: string) {
+    public async getAllFavorites(page: number = 1, token: string) {
         const response: PetModel[] = [];
 
        const user = await this.getUserFromToken(token);
-        const favoritiesPet = await this.favRepository.getFavorities(user._id);
+        const favoritesPet = await this.favRepository.getFavorites(user._id);
 
-        if (favoritiesPet) {
-            for await (const favId of favoritiesPet.favorites) {
+        if (favoritesPet) {
+            for await (const favId of favoritesPet.favorites) {
                 const pet = await this.petRepository.getPet(favId);
                 response.push(pet);
             }
