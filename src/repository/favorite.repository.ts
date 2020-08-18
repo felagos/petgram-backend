@@ -32,7 +32,7 @@ export class FavoriteRepository {
 
         if (!fav) return null;
 
-        const idsFavorites = fav.favorites.filter((pet: PetModel) => pet._id !== petId);
+        const idsFavorites = fav.favorites.filter(pet => String( pet._id) !== petId);
 
         fav.favorites = idsFavorites;
         fav.save();
