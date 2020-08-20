@@ -8,7 +8,7 @@ export class FavoriteService extends BaseSerice {
 
     @inject(FavoriteRepository) private favRepository: FavoriteRepository;
 
-    public async addFavorite(token: string, pet: PetModel): Promise<FavoriteModel> {
+    public async addOrCreateFavorite(token: string, pet: PetModel): Promise<FavoriteModel> {
         const user = await this.getUserFromToken(token);
         return await this.favRepository.addOrCreateFavorite(user._id, pet);
     }

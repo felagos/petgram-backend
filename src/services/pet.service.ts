@@ -23,7 +23,7 @@ export class PetService extends BaseSerice {
         };
 
         const user = await this.getUserFromToken(token);
-        const favs = user ? await this.favRepository.getFavoritesIds(user._id) : [];     
+        const favs = await this.favRepository.getFavoritesIds(user._id);     
 
         const pets = await this.repository.getAllPets(options);
         pets.docs = pets.docs.map(pet => ({
@@ -31,7 +31,7 @@ export class PetService extends BaseSerice {
             nombre: pet.nombre,
             foto: pet.foto,
             categoriaId: pet.categoriaId,
-            favorite: favs.includes(pet._id)
+            favorite: favs.includes(pet._id),
         }));
 
         return pets;

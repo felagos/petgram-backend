@@ -6,25 +6,17 @@ import { FavoriteModel, PetModel } from "@models";
 export class FavoriteRepository {
 
     public async addOrCreateFavorite(id: string, pet: PetModel): Promise<FavoriteModel> {
-        let fav = await Favorite.findOne({ userId: id }).exec();
-
-        if (fav === null) {
-            fav = await this.createFavorite(id, pet);
-        }
-        else {
-            this.updateFavorite(fav, pet);
-        }
-
-        return fav;
+        const fav = await Favorite.findOne({ userId: id }).exec();
+        return fav === null ? await this.createFavorite(id, pet) : await this.updateFavorite(fav, pet);
     }
 
     private async createFavorite(id: string, pet: PetModel) {
         return await new Favorite({ userId: id, favorites: [pet] }).save();
     }
 
-    private updateFavorite(fav: FavoriteModel, pet: PetModel) {
+    private async updateFavorite(fav: FavoriteModel, pet: PetModel) {
         fav.favorites.push(pet);
-        fav.save();
+        return await fav.save();
     }
 
     public async deleteFavorite(userId: string, petId: string): Promise<FavoriteModel | null> {
@@ -32,12 +24,10 @@ export class FavoriteRepository {
 
         if (!fav) return null;
 
-        const idsFavorites = fav.favorites.filter(pet => String( pet._id) !== petId);
-
+        const idsFavorites = fav.favorites.filter(pet => String(pet._id) !== petId);
         fav.favorites = idsFavorites;
-        fav.save();
 
-        return fav;
+        return await fav.save();
     }
 
     public async getFavorites(userId: string): Promise<FavoriteModel | null> {
@@ -48,7 +38,7 @@ export class FavoriteRepository {
         const response = await Favorite.findOne({ userId });
 
         if (!response) return [];
-        return response.favorites.map((pet: PetModel) => pet._id);
+        return response.favorites.map(pet => pet._id);
     }
 
 }

@@ -9,7 +9,7 @@ export class PetController extends BaseController {
 
     @inject(PetService) private service: PetService
 
-    public getMascotaByCategoriId = async (req: Request, res: Response): Promise<Response> => {
+    public getPeyByCategoryId = async (req: Request, res: Response): Promise<Response> => {
         const { categoriaId, page } = req.params;
 
         const response = await this.service.getPeyByCategoryId(categoriaId, page);

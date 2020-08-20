@@ -37,7 +37,7 @@ export class UserService {
             const token = this.jwtHelper.encode(payload);
             const refreshToken = this.jwtHelper.encodeRefresh(payload);
 
-            await this.tokenService.updateToken(user.email, refreshToken);
+            await this.tokenService.updateOrCreateToken(user.email, refreshToken);
 
             const response: TokenModel = {
                 token, refreshToken

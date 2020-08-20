@@ -6,7 +6,7 @@ export class TokenRepository {
 
     public async hasToken(email: string): Promise<boolean> {
         const tokenDB = await Token.findOne({ email }).exec();
-        return tokenDB ? true : false;;
+        return tokenDB ? true : false;
     }
 
     public async saveToken(email: string, refreshToken: string): Promise<void> {
@@ -14,7 +14,7 @@ export class TokenRepository {
         token.save();
     }
 
-    public async updateToken(email: string, refreshToken: string): Promise<void> {
+    public async updateOrCreateToken(email: string, refreshToken: string): Promise<void> {
         await Token.updateOne({ email }, { refreshToken }, { upsert: true }).exec();
     }
 

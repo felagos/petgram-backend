@@ -29,11 +29,11 @@ export class UserController extends BaseController {
     }
 
     public registerUser = async (req: Request, res: Response) => {
-        const dataUser: UserModel = req.body as UserModel;
+        const dataUser = req.body;
         const response = this.userService.doRegisterUser(dataUser);
 
         if (response)
-            return res.status(HttpStatus.CREATE).json(new ResponseData(response));
+            return this.responseCreate(res, response);
 
         return this.responseNotFound(res);
     }

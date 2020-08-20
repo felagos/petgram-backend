@@ -14,8 +14,8 @@ export class TokenService {
         await this.repository.saveToken(email, refreshToken);
     }
 
-    public async updateToken(email: string, refreshToken: string): Promise<void> {
-        await this.repository.updateToken(email, refreshToken);
+    public async updateOrCreateToken(email: string, refreshToken: string): Promise<void> {
+        await this.repository.updateOrCreateToken(email, refreshToken);
     }
 
     public async removeToken(email: string): Promise<void> {

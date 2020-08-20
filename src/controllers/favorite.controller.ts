@@ -14,7 +14,7 @@ export class FavoriteController extends BaseController {
         const { authorization = "" } = req.headers;
         const { pet } = req.body;
 
-        const response = await this.favoriteService.addFavorite(authorization, pet);
+        const response = await this.favoriteService.addOrCreateFavorite(authorization, pet);
 
         return this.responseOK(res, response);
     }
