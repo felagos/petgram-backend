@@ -11,7 +11,7 @@ export class CategoryController extends BaseController {
 
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     const response = await this.service.getAll();
-    return this.responseOK(res, response);
+    return this.getResponse(res, response);
   }
 
 }

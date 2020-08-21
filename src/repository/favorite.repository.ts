@@ -30,8 +30,9 @@ export class FavoriteRepository {
         return await fav.save();
     }
 
-    public async getFavorites(userId: string): Promise<FavoriteModel | null> {
-        return await Favorite.findOne({ userId }).exec();
+    public async getFavorites(userId: string): Promise<PetModel[]> {
+        const response = await Favorite.findOne({ userId }).exec();
+        return response ? response.favorites : [];
     }
 
     public async getFavoritesIds(userId: string): Promise<string[]> {

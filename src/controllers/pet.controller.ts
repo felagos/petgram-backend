@@ -14,7 +14,7 @@ export class PetController extends BaseController {
 
         const response = await this.service.getPeyByCategoryId(categoriaId, page);
         
-        return this.responseOK(res, response);
+        return this.getResponse(res, response);
     }
 
     public getAllPetsWithFav = async (req: Request, res: Response) => {
@@ -23,7 +23,7 @@ export class PetController extends BaseController {
 
         const response = await this.service.getAllPetsWithFav(page, authorization);
 
-        return this.responseOK(res, response);
+        return this.getResponse(res, response);
     }
 
 }

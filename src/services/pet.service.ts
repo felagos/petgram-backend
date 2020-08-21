@@ -9,21 +9,23 @@ export class PetService extends BaseSerice {
     @inject(PetRepository) private repository: PetRepository;
     @inject(FavoriteRepository) private favRepository: FavoriteRepository;
 
-    public getPeyByCategoryId(categoriaId: string, page: string = "1"): Promise<Pagination<PetModel>> {
+    public async getPeyByCategoryId(categoriaId: string, page: string = "1") {
         const options: PaginationOption = {
             page: parseInt(page)
         };
 
-        return this.repository.getPeyByCategoryId(categoriaId, options);
+        const response = await this.repository.getPeyByCategoryId(categoriaId, options);
+
+        return this.responseOK(response);
     }
 
-    public async getAllPetsWithFav(page: string = "1", token: string): Promise<Pagination<PetModel>> {
+    public async getAllPetsWithFav(page: string = "1", token: string) {
         const options: PaginationOption = {
             page: parseInt(page)
         };
 
         const user = await this.getUserFromToken(token);
-        const favs = await this.favRepository.getFavoritesIds(user._id);     
+        const favs = await this.favRepository.getFavoritesIds(user._id);
 
         const pets = await this.repository.getAllPets(options);
         pets.docs = pets.docs.map(pet => ({
@@ -34,8 +36,7 @@ export class PetService extends BaseSerice {
             favorite: favs.includes(pet._id),
         }));
 
-        return pets;
-
+        return this.responseOK(pets);
     }
 
 }

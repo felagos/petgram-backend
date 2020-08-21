@@ -13,27 +13,24 @@ export class FavoriteController extends BaseController {
     public addFavorite = async (req: Request, res: Response) => {
         const { authorization = "" } = req.headers;
         const { pet } = req.body;
-
         const response = await this.favoriteService.addOrCreateFavorite(authorization, pet);
-
-        return this.responseOK(res, response);
+        return this.getResponse(res, response);
     }
 
     public deleteFavorite = async (req: Request, res: Response) => {
         const { authorization = "" } = req.headers;
         const { petId } = req.params;
-
         const response = await this.favoriteService.deleteFavorite(authorization, petId);
-
-        return this.responseOK(res, response);
+        return this.getResponse(res, response);
     }
 
     public getAll = async (req: Request, res: Response) => {
         const { authorization = "" } = req.headers;
-
         const response = await this.favoriteService.getAllFavorites(authorization);
 
-        return this.responseOK(res, response);
+        console.log("response", response);
+
+        return this.getResponse(res, response);
     }
 
 }
