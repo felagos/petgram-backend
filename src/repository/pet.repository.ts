@@ -7,7 +7,7 @@ import { injectable } from 'inversify';
 export class PetRepository {
 
     public async getPeyByCategoryId(categoriaId: string, options: PaginationOption): Promise<Pagination<PetModel>> {
-        const response = await Pet.paginate({ categoriaId }, options);
+        const response = await Pet.paginate({ categoriaId: new Types.ObjectId(categoriaId) }, options);
         return response as Pagination<PetModel>;
     }
 
