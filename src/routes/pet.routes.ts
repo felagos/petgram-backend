@@ -16,6 +16,7 @@ export class PetRouter {
     private initRoutes() {
         this._router.get("/getByCategoriId/:categoriaId/:page?", this.middleware.validateGetCategoriaById, this.controller.getPeyByCategoryId);
         this._router.get("/getAllPets/:page?", this.controller.getAllPetsWithFav);
+        this._router.post("/", this.controller.savePet);
     }
 
     public get router() {

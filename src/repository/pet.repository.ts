@@ -20,4 +20,12 @@ export class PetRepository {
         return await Pet.findOne({ _id: new Types.ObjectId(id) }).exec();
     }
 
+    public async save(pet: PetModel) {
+        return await new Pet({
+            nombre: pet.nombre,
+            foto: pet.foto,
+            categoriaId: pet.categoriaId
+        }).save();
+    }
+
 }

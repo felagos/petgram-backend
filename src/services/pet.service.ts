@@ -39,4 +39,9 @@ export class PetService extends BaseSerice {
         return this.responseOK(pets);
     }
 
+    public async savePet(pet: PetModel) {
+        await this.repository.save(pet);
+        return this.responseCreate(true);
+    }
+
 }

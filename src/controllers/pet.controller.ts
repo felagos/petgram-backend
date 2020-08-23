@@ -26,4 +26,10 @@ export class PetController extends BaseController {
         return this.getResponse(res, response);
     }
 
+    public savePet = async (req: Request, res: Response) => {
+        const pet = req.body;
+        const response = await this.service.savePet(pet);
+        return this.getResponse(res, response);
+    }
+
 }
