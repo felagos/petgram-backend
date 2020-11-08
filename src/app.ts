@@ -8,6 +8,7 @@ import cors from 'cors';
 import { MongoDB } from '@mongo';
 import { container } from './container';
 import { PingRoutes, AuthRoutes, CategoryRouter, PetRouter, FavoriteRouter } from '@routes';
+import { environment } from './environment';
 
 class App {
 
@@ -33,11 +34,11 @@ class App {
     }
 
     private initRoutes() {
-        this._app.use("/ping", this.pingRoutes.router);
-        this._app.use("/auth", this.authRoures.router);
-        this._app.use("/categorias", this.categoryRouter.router);
-        this._app.use("/mascotas", this.petRouter.router);
-        this._app.use("/favorite", this.favoriteRouter.router);
+        this._app.use(`${environment.BASE}/ping`, this.pingRoutes.router);
+        this._app.use(`${environment.BASE}/auth`, this.authRoures.router);
+        this._app.use(`${environment.BASE}/categorias`, this.categoryRouter.router);
+        this._app.use(`${environment.BASE}/mascotas`, this.petRouter.router);
+        this._app.use(`${environment.BASE}/favorite`, this.favoriteRouter.router);
     }
 
     private initMongo() {
