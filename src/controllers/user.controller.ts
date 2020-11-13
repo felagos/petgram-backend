@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import { HttpStatus } from '@enums';
-import { ResponseData, UserModel } from '@models';
 import { inject, injectable } from 'inversify';
 import { UserService } from '@services';
 import { BaseController } from './base.controller';
@@ -24,7 +22,7 @@ export class UserController extends BaseController {
 
     public registerUser = async (req: Request, res: Response) => {
         const dataUser = req.body;
-        const response = this.userService.doRegisterUser(dataUser);
+        const response = await this.userService.doRegisterUser(dataUser);
         return this.getResponse(res, response);
     }
 
