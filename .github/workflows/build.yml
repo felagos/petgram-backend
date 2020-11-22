@@ -24,14 +24,12 @@ jobs:
         JWT_SECRET_REFRESH: ${{ secrets.JWT_SECRET_REFRESH }}
         MONGODB_URI: ${{ secrets.MONGODB_URI }}
         PORT: ${{ secrets.PORT  }}
-    - name: copy file via ssh key
-      uses: garygrossgarten/github-action-scp@release
+    - name: Publish to Github Packages Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        privateKey: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        rmRemote: true
-        recursive: true
-        local: "./dist"
-        remote: ${{ secrets.FOLDER }}
+        name: ${{ secrets.GIT_USER }}/petgram-backend/petgram-backend
+        registry: docker.pkg.github.com
+        username: ${{ secrets.GIT_USER }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        dockerfile: Dockerfile
+        tags: latest
