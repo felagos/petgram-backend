@@ -16,7 +16,7 @@ jobs:
     - name: Publish to Github Packages Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: ${{ secrets.GIT_USER }}/petgram-backend/${{ secrets.CONTAINER_NAME }}
+        name: ${{ secrets.GIT_USER }}/${{ secrets.CONTAINER_NAME }}/${{ secrets.CONTAINER_NAME }}
         registry: docker.pkg.github.com
         username: ${{ secrets.GIT_USER }}
         password: ${{ secrets.GITHUB_TOKEN }}
