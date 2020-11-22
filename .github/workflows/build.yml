@@ -15,13 +15,6 @@ jobs:
         node-version: '14' 
     - name: Publish to Github Packages Registry
       uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: ${{ secrets.GIT_USER }}/petgram-backend/petgram-backend
-        registry: docker.pkg.github.com
-        username: ${{ secrets.GIT_USER }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        dockerfile: Dockerfile
-        tags: latest
       env:
         EXP_CACHE: ${{ secrets.EXP_CACHE }}
         EXP_TOKEN: ${{ secrets.EXP_TOKEN }}
@@ -29,6 +22,14 @@ jobs:
         JWT_SECRET_REFRESH: ${{ secrets.JWT_SECRET_REFRESH }}
         MONGODB_URI: ${{ secrets.MONGODB_URI }}
         PORT: ${{ secrets.PORT }}
+      with:
+        name: ${{ secrets.GIT_USER }}/petgram-backend/petgram-backend
+        registry: docker.pkg.github.com
+        username: ${{ secrets.GIT_USER }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        dockerfile: Dockerfile
+        tags: latest
+        buildargs: EXP_CACHE,EXP_TOKEN,JWT_SECRET,JWT_SECRET_REFRESH,MONGODB_URI,PORT
     - name: Deploy package to digitalocean
       uses: appleboy/ssh-action@master
       env:
