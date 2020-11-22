@@ -41,7 +41,7 @@ jobs:
         username: ${{ secrets.USER_HOST }}
         key: ${{ secrets.HOST_KEY }}
         port: ${{ secrets.HOST_PORT }}
-        envs: GIT_USER, GITHUB_TOKEN, CONTAINER_NAME, APP_PORT
+        envs: GIT_USER,GITHUB_TOKEN,CONTAINER_NAME,APP_PORT
         script: |
           docker login docker.pkg.github.com -u $GIT_USER -p $GITHUB_TOKEN
           CONTAINER="$(docker ps --all --quiet --filter=name='$CONTAINER_NAME')"
