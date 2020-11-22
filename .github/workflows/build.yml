@@ -45,7 +45,7 @@ jobs:
         script: |
           env
           docker login docker.pkg.github.com -u $GIT_USER -p $GITHUB_TOKEN
-          CONTAINER="$(docker ps --all --quiet --filter=name='$CONTAINER_NAME')"
+          CONTAINER="$(docker ps --all --quiet --filter=name=petgram-backend)"
           if [ -n "$CONTAINER" ]; then
             docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME
           fi
