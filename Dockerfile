@@ -8,6 +8,8 @@ RUN npm i
 
 COPY [".", "."]
 
+ARG MONGODB_URI
+
 ENV MONGODB_URI=$MONGODB_URI
 
 RUN npm run build
