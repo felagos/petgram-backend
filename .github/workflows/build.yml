@@ -41,9 +41,9 @@ jobs:
         username: ${{ secrets.USER_HOST }}
         key: ${{ secrets.HOST_KEY }}
         port: ${{ secrets.HOST_PORT }}
-        envs: GIT_USER, GITHUB_TOKEN, CONTAINER_NAME
+        envs: GIT_USER, GITHUB_TOKEN, CONTAINER_NAME, APP_PORT
         script: |
-          docker login docker.pkg.github.com -u ${{ secrets.GIT_USER }} -p ${{ secrets.GITHUB_TOKEN }}
+          docker login docker.pkg.github.com -u $GIT_USER -p $GITHUB_TOKEN
           CONTAINER="$(docker ps --all --quiet --filter=name='$CONTAINER_NAME')"
           if [ -n "$CONTAINER" ]; then
             docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME
