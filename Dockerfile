@@ -8,6 +8,8 @@ RUN npm i
 
 COPY [".", "."]
 
+ENV MONGODB_URI=$MONGODB_URI
+
 RUN npm run build
 
 EXPOSE 3000
