@@ -16,7 +16,7 @@ jobs:
     - name: Publish to Github Packages Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: ${{ secrets.GIT_USER }}/${{ secrets.CONTAINER_NAME }}/${{ secrets.CONTAINER_NAME }}
+        name: ${{ secrets.GIT_USER }}/petgram-backend/petgram-backend
         registry: docker.pkg.github.com
         username: ${{ secrets.GIT_USER }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -49,5 +49,5 @@ jobs:
           if [ -n "$CONTAINER" ]; then
             docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME
           fi
-          docker pull docker.pkg.github.com/$GIT_USER/$CONTAINER_NAME/$CONTAINER_NAME:latest
-          docker run --name $CONTAINER_NAME -d -p $APP_PORT:$APP_PORT docker.pkg.github.com/$GIT_USER/$CONTAINER_NAME/$CONTAINER_NAME:latest
+          docker pull docker.pkg.github.com/$GIT_USER/petgram-backend/petgram-backend:latest
+          docker run --name $CONTAINER_NAME -d -p $APP_PORT:$APP_PORT docker.pkg.github.com/$GIT_USER/petgram-backend/petgram-backend:latest
