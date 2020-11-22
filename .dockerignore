@@ -1,0 +1,9 @@
+.env
+.dockerignore
+.git
+*Dockerfile*
+node_modules
+dist
+.github/**
+jest.config.js
+README.md
