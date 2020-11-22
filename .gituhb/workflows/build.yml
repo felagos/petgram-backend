@@ -1,0 +1,37 @@
+name: petgram-backend
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14'
+    - name: Run install
+      run: npm ci
+    - name: Run build
+      run: npm run build  
+      env:
+        EXP_CACHE: ${{ secrets.EXP_CACHE }}
+        EXP_TOKEN: ${{ secrets.EXP_TOKEN }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        JWT_SECRET_REFRESH: ${{ secrets.JWT_SECRET_REFRESH }}
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        PORT: ${{ secrets.PORT  }}
+    - name: copy file via ssh key
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        privateKey: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        rmRemote: true
+        recursive: true
+        local: "./dist"
+        remote: ${{ secrets.FOLDER }}
