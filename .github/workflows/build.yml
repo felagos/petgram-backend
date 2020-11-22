@@ -41,14 +41,12 @@ jobs:
         username: ${{ secrets.USER_HOST }}
         key: ${{ secrets.HOST_KEY }}
         port: ${{ secrets.HOST_PORT }}
-        envs: GIT_USER, GITHUB_TOKEN
+        envs: GIT_USER, GITHUB_TOKEN, CONTAINER_NAME
         script: |
+          docker login docker.pkg.github.com -u $GIT_USER --password-stdin $GITHUB_TOKEN
           CONTAINER="$(docker ps --all --quiet --filter=name='$CONTAINER_NAME')"
           if [ -n "$CONTAINER" ]; then
-            docker stop $CONTAINER && docker rm $CONTAINER
+            docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME
           fi
-          echo "$GIT_USER"
-          echo "$GITHUB_TOKEN"
-          docker login docker.pkg.github.com -u "$GIT_USER" --password-stdin "$GITHUB_TOKEN"
           docker pull docker.pkg.github.com/$GIT_USER/$CONTAINER_NAME/$CONTAINER_NAME:latest
-          docker run --name petgram-back -dit -p $APP_PORT:$APP_PORT docker.pkg.github.com/$GIT_USER/$CONTAINER_NAME/$CONTAINER_NAME:latest
+          docker run --name $CONTAINER_NAME -d -p $APP_PORT:$APP_PORT docker.pkg.github.com/$GIT_USER/$CONTAINER_NAME/$CONTAINER_NAME:latest
